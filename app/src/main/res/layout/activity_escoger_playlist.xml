@@ -20,5 +20,11 @@
             android:layout_height="47dp"
             android:text="TextView" />
 
+        <ImageView
+            android:id="@+id/imagenPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
