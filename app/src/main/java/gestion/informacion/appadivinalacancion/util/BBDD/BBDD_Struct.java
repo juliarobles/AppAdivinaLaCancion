@@ -1,6 +1,10 @@
 package gestion.informacion.appadivinalacancion.util.BBDD;
 
+import java.text.SimpleDateFormat;
+
 public class BBDD_Struct {
+
+    public static final SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS");
 
     //-------------------------------------------------------------------------
     // CREACION DE TABLAS
