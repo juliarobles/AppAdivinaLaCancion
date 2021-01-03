@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppAdivinaLaCancion</string>
+    <string name="app_name">Guess The Song</string>
     <string name="button_jugar">JUGAR</string>
     <string name="button_instrucciones">INSTRUCCIONES</string>
     <string name="button_historial">HISTORIAL DE PARTIDAS</string>
