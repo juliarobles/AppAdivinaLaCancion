@@ -7,9 +7,9 @@ public class JugadorProvisional {
 
     private String nombre;
     private Partida partida;
-    private String color;
+    private int color;
 
-    public JugadorProvisional(String nombre, Partida partida, String color) {
+    public JugadorProvisional(String nombre, Partida partida, int color) {
         this.nombre = nombre;
         this.partida = partida;
         this.color = color;
@@ -31,11 +31,11 @@ public class JugadorProvisional {
         this.partida = partida;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 }

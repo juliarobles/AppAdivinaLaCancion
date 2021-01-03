@@ -243,7 +243,7 @@ public class Partida {
     public void setJugadores(List<JugadorProvisional> jugadores, BBDD_Helper helper) throws Exception {
         List<Jugador> list = new ArrayList<>();
         for (JugadorProvisional jugador : jugadores){
-            list.add(new Jugador(jugador.getNombre(), jugador.getPartida(), jugador.getColor(), helper));
+            list.add(new Jugador(jugador.getNombre(), jugador.getPartida(), String.valueOf(jugador.getColor()), helper));
         }
         this.jugadores = list;
     }

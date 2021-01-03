@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import java.util.Map;
 import gestion.informacion.appadivinalacancion.util.Otros.ListaPlaylistAdapter;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
+import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
 
 public class EscogerPlaylistActivity extends AppCompatActivity {
@@ -30,8 +32,6 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
     private TextView urlPlaylist;
     private TextView numRondas;
     private RecyclerView listaPlaylist;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private List<Tupla> playlists;
     private BBDD_Helper helper;
 
@@ -171,6 +171,7 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
 
                     //Creamos la partida
                     Partida partida = new Partida(new Date(), rondas, url, helper);
+                    SingletonMap.getInstancia().put("partida", partida);
 
                     //Pasamos a la siguiente pantalla
                     Intent intent = new Intent(this, EscogerParticipantesActivity.class);

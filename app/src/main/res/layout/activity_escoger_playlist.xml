@@ -16,14 +16,10 @@
         tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <TextView
             android:id="@+id/textView4"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/title_configuracionjuego"
             android:textColor="@color/amarillito"
@@ -31,14 +27,14 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:text="@string/labelURLPlaylist"
             android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/urlPlaylist"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textUri"
@@ -46,22 +42,22 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:text="@string/labelNumRondas"
             android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/numRondas"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
-            android:inputType="numberSigned"
-            android:autofillHints="" />
+            android:inputType="numberSigned" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/amarillito"
             android:onClick="respuestaEscogerPlaylist"
@@ -70,11 +66,11 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/title_playlistRecomendadas"
@@ -82,12 +78,19 @@
             android:textSize="24sp" />
 
         <com.google.android.material.tabs.TabLayout
-            android:layout_width="300dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:background="@color/moradito"
             app:tabIndicatorColor="@color/amarillito"
             app:tabSelectedTextColor="@color/amarillito"
             app:tabTextColor="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_ejemplos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="cambiarPlaylistEjemplos"
+                android:text="@string/tab_ejemplos" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_masUsadas"
@@ -103,17 +106,12 @@
                 android:onClick="cambiarPlaylistRecientes"
                 android:text="@string/tab_recientes" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_ejemplos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="cambiarPlaylistEjemplos"
-                android:text="@string/tab_ejemplos" />
         </com.google.android.material.tabs.TabLayout>
 
         <ScrollView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content">
+            android:layout_width="340dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,14 +121,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listaPlaylist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </ScrollView>
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

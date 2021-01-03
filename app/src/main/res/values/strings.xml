@@ -10,11 +10,18 @@
     <string name="labelNumRondas">Número de rondas:</string>
     <string name="button_continuar">Continuar</string>
     <string name="title_configuracionjuego">Configuración del juego</string>
-    <string name="tab_masUsadas">Más usadas</string>
+    <string name="tab_masUsadas">Tus más usadas</string>
     <string name="tab_recientes">Recientes</string>
     <string name="tab_ejemplos">Ejemplos</string>
     <string name="title_playlistRecomendadas">Playlist recomendadas</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="mensaje_playlistCambiada">Playlist establecida a:</string>
+    <string name="title_participantes">Inscribe a los participantes</string>
+    <string name="button_aniadirParticipante">Añadir participante</string>
+    <string name="labelNombreParticipante">Escribe el nombre del jugador:</string>
+    <string name="title_listaActualParticipantes">Lista de jugadores</string>
+    <string name="button_empezarJuego">¡A jugar!</string>
+    <string name="falloMaxJugadores">¡Lo siento! El máximo de jugadores es 7</string>
+    <string name="falloNombreVacio">El nombre del jugador no puede estar vacío</string>
 </resources>
