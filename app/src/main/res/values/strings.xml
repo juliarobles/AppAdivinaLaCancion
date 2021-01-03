@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">AppAdivinaLaCancion</string>
+    <string name="button_jugar">JUGAR</string>
+    <string name="button_instrucciones">INSTRUCCIONES</string>
+    <string name="button_historial">HISTORIAL DE PARTIDAS</string>
+    <string name="falloURL">La playlist introducida no es una URL correcta</string>
+    <string name="falloCrearPartida">Fallo al crear la partida, intentelo de nuevo</string>
+    <string name="falloMenorIgualCero">El número de rondas debe estar entre 1 y 100</string>
+    <string name="labelURLPlaylist">URL de la playlist:</string>
+    <string name="labelNumRondas">Número de rondas:</string>
+    <string name="button_continuar">Continuar</string>
+    <string name="title_configuracionjuego">Configuración del juego</string>
+    <string name="tab_masUsadas">Más usadas</string>
+    <string name="tab_recientes">Recientes</string>
+    <string name="tab_ejemplos">Ejemplos</string>
+    <string name="title_playlistRecomendadas">Playlist recomendadas</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="mensaje_playlistCambiada">Playlist establecida a:</string>
 </resources>

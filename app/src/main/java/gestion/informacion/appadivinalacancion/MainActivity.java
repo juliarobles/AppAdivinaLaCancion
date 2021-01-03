@@ -9,20 +9,25 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button btn_jugar;
+    private Button btn_instrucciones;
+    private Button btn_historial;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        cambiarActivity();
+        setContentView(R.layout.activity_inicio);
+        getSupportActionBar().hide();
+        //btn_jugar = (Button) findViewById(R.id.btn_jugar);
+        //btn_instrucciones = (Button) findViewById(R.id.btn_instrucciones);
+        //btn_historial = (Button) findViewById(R.id.btn_historial);
     }
-    private void cambiarActivity(){
-        Button cambiarButton = (Button) findViewById(R.id.buttonCambiar);
-        cambiarButton.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EscogerPlaylistActivity.class));
-            }
-        });
+    public void respuestaJugar(android.view.View v){
+        Intent intent = new Intent(this, EscogerPlaylistActivity.class);
+        startActivity(intent);
     }
+
+
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/moradito"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="219dp"
+            android:layout_height="206dp"
+            app:srcCompat="@drawable/logo4" />
+
+        <Button
+            android:id="@+id/btn_jugar"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/amarillito"
+            android:fontFamily="sans-serif-light"
+            android:onClick="respuestaJugar"
+            android:text="@string/button_jugar"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_instrucciones"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/button_instrucciones"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_historial"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/button_historial"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

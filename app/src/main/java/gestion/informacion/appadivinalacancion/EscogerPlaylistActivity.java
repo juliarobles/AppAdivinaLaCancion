@@ -1,32 +1,39 @@
 package gestion.informacion.appadivinalacancion;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
+import gestion.informacion.appadivinalacancion.util.Otros.ListaPlaylistAdapter;
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
+import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
+import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
 
 public class EscogerPlaylistActivity extends AppCompatActivity {
 
-
-        //Crear objetos de la pantalla
-    private TextView nombrePlaylist;
+    //Crear objetos de la pantalla
+    private TextView urlPlaylist;
+    private TextView numRondas;
+    private RecyclerView listaPlaylist;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<Tupla> playlists;
+    private BBDD_Helper helper;
 
     public static String getParamsString(Map<String, String> params)
             throws UnsupportedEncodingException {
@@ -44,14 +51,40 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
                 ? resultString.substring(0, resultString.length() - 1)
                 : resultString;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escoger_playlist);
+        getSupportActionBar().hide();
 
-        //Elementos vista
-        nombrePlaylist = (TextView)findViewById(R.id.nombrePlaylist);
+        //Creamos el helper de la BBDD
+        helper = new BBDD_Helper(getApplicationContext());
 
+        //Sacamos los elementos de la vista
+        urlPlaylist = (TextView)findViewById(R.id.urlPlaylist);
+        numRondas = (TextView)findViewById(R.id.numRondas);
+        listaPlaylist = (RecyclerView)findViewById(R.id.listaPlaylist);
+
+        //Configuramos la recyclerView
+        listaPlaylist.setHasFixedSize(true);
+        listaPlaylist.setLayoutManager(new LinearLayoutManager(this));
+        ponerEjemplos();
+        ListaPlaylistAdapter adapter = new ListaPlaylistAdapter(playlists);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tupla t = playlists.get(listaPlaylist.getChildAdapterPosition(view));
+                urlPlaylist.setText(t.getX2());
+                Toast.makeText(getApplicationContext(), getString(R.string.mensaje_playlistCambiada) + " " + t.getX1(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        listaPlaylist.setAdapter(adapter);
+
+        //activarSpotify();
+    }
+
+    private void activarSpotify(){
         //Prueba conexion URL
         //https://www.baeldung.com/java-http-request
 
@@ -60,7 +93,7 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         Client ID: c4efe3f6719249d7b465386ced876161
         Client Secret: c4da7a4469594e8ebd5a29148458efa4
          */
-        AsyncTask.execute(new Runnable(){
+       /* AsyncTask.execute(new Runnable(){
 
             @Override
             public void run() {
@@ -111,9 +144,56 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        } );
+        } );*/
+    }
 
+    private void ponerEjemplos() {
+        playlists = new ArrayList<>();
+        playlists.add(new Tupla("El Top 50 Global", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF"));
+        playlists.add(new Tupla("El Top 50 de España", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9"));
+        playlists.add(new Tupla("Los 50 más virales global", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9"));
+        playlists.add(new Tupla("Los 50 más virales de España", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj"));
+    }
 
+    public void respuestaEscogerPlaylist(android.view.View v){
+        try {
+            //Sacamos los valores añadidos por el usuario
+            String valorRondas = numRondas.getText().toString();
+            if(valorRondas == null || valorRondas.equals("")) {
+                Toast.makeText(getApplicationContext(), R.string.falloMenorIgualCero, Toast.LENGTH_LONG).show();
+            } else {
+                int rondas = Integer.parseInt(valorRondas);
+                if(rondas <= 0 || rondas > 100){
+                    Toast.makeText(getApplicationContext(), R.string.falloMenorIgualCero, Toast.LENGTH_LONG).show();
+                } else {
+                    String valorURL = urlPlaylist.getText().toString();
+                    URL url = new URL(valorURL);
+
+                    //Creamos la partida
+                    Partida partida = new Partida(new Date(), rondas, url, helper);
+
+                    //Pasamos a la siguiente pantalla
+                    Intent intent = new Intent(this, EscogerParticipantesActivity.class);
+                    startActivity(intent);
+                }
+            }
+        } catch (MalformedURLException e) {
+            Toast.makeText(getApplicationContext(), R.string.falloURL, Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), R.string.falloCrearPartida, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void cambiarPlaylistMasUsadas(android.view.View v){
+        //playlists =
+    }
+
+    public void cambiarPlaylistRecientes(android.view.View v){
+        //playlists =
+    }
+
+    public void cambiarPlaylistEjemplos(android.view.View v){
+        ponerEjemplos();
     }
 
 

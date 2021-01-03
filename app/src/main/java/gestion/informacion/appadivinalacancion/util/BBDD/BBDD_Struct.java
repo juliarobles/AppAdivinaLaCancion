@@ -36,7 +36,7 @@ public class BBDD_Struct {
 
     protected static final String SQL_CREATE_JUGADOR = "CREATE TABLE " + TABLA_JUGADOR + " ("
             + ID_JUGADOR + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + NOMBRE_JUGADOR + "TEXT NOT NULL"
+            + NOMBRE_JUGADOR + "TEXT NOT NULL,"
             + PUNTOS_JUGADOR + " INTEGER NOT NULL,"
             + ACERTADAS_JUGADOR + " INTEGER NOT NULL,"
             + ID_PARTIDA_JUGADOR + " INTEGER NOT NULL,"
@@ -71,7 +71,7 @@ public class BBDD_Struct {
             + ")";
 
     //Añadir ganador a partida, que tiene constraint jugador (antes no se podia porque la tabla jugador no existia aún)
-    protected static final String SQL_ADDGANADOR_PARTIDA = "CREATE TABLE " + TABLA_PARTIDA
+    protected static final String SQL_ADDGANADOR_PARTIDA = "ALTER TABLE " + TABLA_PARTIDA
             + " ADD COLUMN " + GANADOR_PARTIDA + " INTEGER REFERENCES " + TABLA_CANCION + "(" + ID_CANCION + ")";
 
     //-------------------------------------------------------------------------
