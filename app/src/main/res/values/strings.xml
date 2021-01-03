@@ -29,4 +29,8 @@
     <string name="finpregunta">"?"</string>
     <string name="eliminar">Eliminar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="falloNoJugadores">Debe haber al menos 1 jugador</string>
+    <string name="play">Reproducir</string>
+    <string name="pause">Parar</string>
+    <string name="labelRonda">"Ronda: "</string>
 </resources>

@@ -86,6 +86,7 @@
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/amarillito"
+            android:onClick="respuestaEmpezarJuego"
             android:text="@string/button_empezarJuego" />
 
         <ScrollView

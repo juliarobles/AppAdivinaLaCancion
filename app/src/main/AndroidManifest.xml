@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppAdivinaLaCancion">
+        <activity android:name=".JugarResultadoPartidaActivity"></activity>
+        <activity android:name=".JugarRondaRespuestaActivity" />
+        <activity android:name=".JugarRondaSonarActivity" />
         <activity android:name=".EscogerParticipantesActivity" />
         <activity android:name=".EscogerPlaylistActivity" />
         <activity android:name=".MainActivity">

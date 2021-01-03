@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.ListaJugadoresAdapter;
@@ -31,6 +34,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
     private int numParticipantes;
     private List<Integer> avatars;
     private Partida partida;
+    private BBDD_Helper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         nombreParticipante = (TextView) findViewById(R.id.nombreParticipante);
         listaJugadores = (RecyclerView) findViewById(R.id.listaJugadores);
         avatar = (ImageView) findViewById(R.id.avatar);
+
+        //Creamos el helper de la BBDD
+        helper = new BBDD_Helper(getApplicationContext());
 
         //Inicializo variables
         jugadores = new ArrayList<>();
@@ -119,8 +126,30 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), R.string.falloMaxJugadores, Toast.LENGTH_SHORT).show();
         }
+    }
 
+    public void respuestaEmpezarJuego(android.view.View v){
+        try {
+            if(numParticipantes >= 1){
+                Map map = SingletonMap.getInstancia();
+                //Establezco los jugadores como definitivos (osea los guardo en la bd)
+                ((Partida)map.get("partida")).setJugadores(jugadores, helper);
+                //Esta variable nos permitirá tener saber cuantas rondas hemos jugado
+                map.put("rondasJugadas", 0);
 
+                //WANY. No sé como va el tema spotify, pero aquí a los mejor habria que hacer una List<Cancion> con RONDAS canciones elegidas
+                //aleatoriamente de la playlist. Esa List<Cancion> la meteríamos en el SingletonMap y ya en cada ronda se reproduciría .get(rondasJugadas) de
+                //esa lista. No sé si se puede hacer así pero ahí está la idea.
+
+                //Comienzo el juego
+                Intent intent = new Intent(this, JugarRondaSonarActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.falloNoJugadores, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), R.string.falloCrearPartida, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void inicializarAvatars() {

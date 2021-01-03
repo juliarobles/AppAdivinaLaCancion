@@ -32,15 +32,15 @@ public class BBDD_Struct {
     public static final String PUNTOS_JUGADOR = "PUNTOS";
     public static final String ACERTADAS_JUGADOR = "ACERTADAS";
     public static final String ID_PARTIDA_JUGADOR = "ID_PARTIDA";
-    public static final String COLOR_JUGADOR = "JUGADOR";
+    public static final String COLOR_JUGADOR = "COLOR";
 
     protected static final String SQL_CREATE_JUGADOR = "CREATE TABLE " + TABLA_JUGADOR + " ("
             + ID_JUGADOR + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + NOMBRE_JUGADOR + "TEXT NOT NULL,"
+            + NOMBRE_JUGADOR + " TEXT NOT NULL,"
             + PUNTOS_JUGADOR + " INTEGER NOT NULL,"
             + ACERTADAS_JUGADOR + " INTEGER NOT NULL,"
             + ID_PARTIDA_JUGADOR + " INTEGER NOT NULL,"
-            + COLOR_JUGADOR + "TEXT NOT NULL,"
+            + COLOR_JUGADOR + " TEXT NOT NULL,"
             + "FOREIGN KEY(" + ID_PARTIDA_JUGADOR + ") REFERENCES " + TABLA_PARTIDA + "(" + ID_PARTIDA + ")"
             + ")";
 
@@ -54,8 +54,8 @@ public class BBDD_Struct {
     protected static final String SQL_CREATE_CANCION = "CREATE TABLE " + TABLA_CANCION + " ("
             + ID_CANCION + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + NOMBRE_CANCION + " TEXT NOT NULL,"
-            + URL_CANCION + " TEXT NOT NULL,"
-            + AUTOR_CANCION + "TEXT NOT NULL)";
+            + URL_CANCION + " TEXT NOT NULL UNIQUE,"
+            + AUTOR_CANCION + " TEXT NOT NULL)";
 
     //Crear tabla cancionPartida
     public static final String TABLA_CANCIONPARTIDA = "CANCIONPARTIDA";
