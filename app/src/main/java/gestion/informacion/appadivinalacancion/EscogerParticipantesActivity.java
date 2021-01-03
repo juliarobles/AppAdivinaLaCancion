@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import gestion.informacion.appadivinalacancion.util.Modelo.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
@@ -23,7 +25,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
 
     private TextView nombreParticipante;
     private RecyclerView listaJugadores;
-    private RecyclerView.Adapter adapter;
+    private ListaJugadoresAdapter adapter;
     private ImageView avatar;
     private List<JugadorProvisional> jugadores;
     private int numParticipantes;
@@ -56,6 +58,39 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         listaJugadores.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new ListaJugadoresAdapter(jugadores);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = listaJugadores.getChildAdapterPosition(view);
+                JugadorProvisional jugador = jugadores.get(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EscogerParticipantesActivity.this);
+                builder.setMessage(getString(R.string.avisoSeguroEliminarJugador) + " " + jugador.getNombre() + getString(R.string.finpregunta))
+                        .setTitle(R.string.avisoEliminarJugador);
+                builder.setPositiveButton(R.string.eliminar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        int color = jugador.getColor();
+                        //Elimino jugador
+                        jugadores.remove(jugador);
+                        numParticipantes--;
+                        //Pongo el avatar que tenía el último de la lista
+                        avatars.remove(new Integer(color));
+                        avatars.add(color);
+                        //Actualizo el recyclerView
+                        //GRACIAS: https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+                        adapter.notifyDataSetChanged();
+                        listaJugadores.removeViewAt(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, jugadores.size());
+                    }
+                });
+                builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+                builder.create().show();
+            }
+        });
         listaJugadores.setAdapter(adapter);
 
     }

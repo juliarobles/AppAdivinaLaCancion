@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.AppAdivinaLaCancion" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/moradito</item>
+        <item name="colorPrimary">@color/amarillito</item>
         <item name="colorPrimaryVariant">@color/moradito</item>
         <item name="colorOnPrimary">@color/moradito</item>
         <!-- Secondary brand color. -->

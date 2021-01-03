@@ -24,4 +24,9 @@
     <string name="button_empezarJuego">¡A jugar!</string>
     <string name="falloMaxJugadores">¡Lo siento! El máximo de jugadores es 7</string>
     <string name="falloNombreVacio">El nombre del jugador no puede estar vacío</string>
+    <string name="avisoEliminarJugador">Eliminar jugador</string>
+    <string name="avisoSeguroEliminarJugador">¿Estás seguro de que quieres eliminar a </string>
+    <string name="finpregunta">"?"</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
