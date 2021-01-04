@@ -33,17 +33,26 @@ public class Cancion {
      */
     public Cancion(String nombre, URL url, String autor, BBDD_Helper helper) throws Exception {
         SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + BBDD_Struct.TABLA_CANCION + " WHERE " + BBDD_Struct.URL_CANCION + " = ?",
+                new String[]{url.toString()});
+        if(c.getCount() < 1){
+            //Creo la canción
+            ContentValues values = new ContentValues();
+            values.put(BBDD_Struct.NOMBRE_CANCION, nombre);
+            values.put(BBDD_Struct.URL_CANCION, url.toString());
+            values.put(BBDD_Struct.AUTOR_CANCION, autor);
 
-        ContentValues values = new ContentValues();
-        values.put(BBDD_Struct.NOMBRE_CANCION, nombre);
-        values.put(BBDD_Struct.URL_CANCION, url.toString());
-        values.put(BBDD_Struct.AUTOR_CANCION, autor);
-
-        long ex = db.insert(BBDD_Struct.TABLA_CANCION, null, values);
-        if(ex == -1) {
-            throw new Exception("Fallo al crear la partida");
+            long ex = db.insert(BBDD_Struct.TABLA_CANCION, null, values);
+            if(ex == -1) {
+                throw new Exception("Fallo al crear la partida");
+            }
+            this.id = Math.toIntExact(ex);
+        } else {
+            //Posible actualizacion?
+            if (c.moveToFirst()){
+                this.id = Math.toIntExact(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_CANCION)));
+            }
         }
-        this.id = Math.toIntExact(ex);
         this.nombre = nombre;
         this.url = url;
         this.autor = autor;

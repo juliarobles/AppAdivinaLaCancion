@@ -33,4 +33,7 @@
     <string name="play">Reproducir</string>
     <string name="pause">Parar</string>
     <string name="labelRonda">"Ronda: "</string>
+    <string name="labelTiempo">Segundos escuchados:</string>
+    <string name="avisoFinTiempo">¡Se acabo el tiempo!</string>
+    <string name="button_verResultado">Ver resultado</string>
 </resources>

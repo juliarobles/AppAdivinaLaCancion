@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +25,14 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
 
     private ImageView disco;
     private TextView labelRonda;
+    private TextView labelCronometro;
     private ObjectAnimator rotar;
     private Button btn_play;
     private Button btn_loTengo;
     private Boolean parado;
     private int rondasJugadas;
+    private Chronometer cronometro;
+    private long pauseOffset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,11 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         btn_play = (Button) findViewById(R.id.btn_play);
         btn_loTengo = (Button) findViewById(R.id.btn_loTengo);
         labelRonda = (TextView) findViewById(R.id.textoRonda);
+        cronometro = (Chronometer) findViewById(R.id.cronometro);
 
         //Inicializamos las variables necesarias
         parado = true;
+        pauseOffset = 0;
 
         //Pongo el numero de ronda y lo cambio en nuestra información
         Map info = SingletonMap.getInstancia();
@@ -58,27 +65,43 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         rotar.setInterpolator(new LinearInterpolator());
         rotar.start();
         rotar.pause();
+
+        //Inicializamos el cronometro
+        cronometro.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if((SystemClock.elapsedRealtime() - cronometro.getBase()) >= 30000){
+                    cronometro.stop();
+                    btn_loTengo.setEnabled(true);
+                    rotar.pause();
+                    parado = true;
+                    btn_play.setEnabled(false);
+                    btn_play.setText(R.string.avisoFinTiempo);
+                }
+            }
+        });
+
     }
 
     public void respuestaBotonPlay(android.view.View v){
         if (parado){
             //WANY. Aqui deberia seguir sonando la cancion o empezando
-            //Tenemos que añadir aqui un temporizador para saber cuanto tiempo se ha reproducido la canción para luego calcular los puntos
-
+            //El temporizador sigue corriendo
+            cronometro.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            cronometro.start();
             //Cambio el texto del boton y escondo el otro. Sigo rotando.
             btn_play.setText(R.string.pause);
             btn_loTengo.setEnabled(false);
-            btn_loTengo.setVisibility(View.INVISIBLE);
             rotar.resume();
             parado = false;
         } else {
             //WANY. Aqui debería pararse la canción
-            //Aqui el temporizador tambien deberia pausarse
-
+            //Aqui el temporizador se pausa
+            cronometro.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - cronometro.getBase();
             //Cambio el texto del boton y muestro el otro. Paro de rotar.
             btn_play.setText(R.string.play);
             btn_loTengo.setEnabled(true);
-            btn_loTengo.setVisibility(View.VISIBLE);
             rotar.pause();
             parado = true;
         }
