@@ -5,6 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,9 +21,12 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.SQLOutput;
 import java.util.Base64;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 
 public  class Spotify {
@@ -33,7 +37,9 @@ public  class Spotify {
 
     private String token;
 
-    public Spotify (){
+    private BBDD_Helper helper;
+    public Spotify (BBDD_Helper helper){
+        this.helper = helper;
         Object[] obj =  {"token"};
         SpotifyTask task = new SpotifyTask();
 
@@ -44,7 +50,7 @@ public  class Spotify {
         System.out.println("Token actualizado " + this.token );
     }
 
-    public List<Cancion> getCancionesFromPlaylist(String id){
+    public List<Cancion> getCancionesFromPlaylist(String id, int numero){
         SpotifyTask task = new SpotifyTask();
 
         String url = 	"https://api.spotify.com/v1/playlists/"+id+"/tracks";
@@ -58,9 +64,21 @@ public  class Spotify {
                 System.out.println("BUSQUEDA FINALIZADA");
                 System.out.println("LISTA CANCIONES: " );
                 JSONObject aux;
-                for (int cont = 0; cont < respuesta.getJSONArray("items").length();cont++){
-                    aux = respuesta.getJSONArray("items").getJSONObject(cont);
-
+                List<Integer> usados = new LinkedList<>();
+                List<Cancion> listaCanciones = new LinkedList<>();
+                int cont = 0;
+                Random r = new Random();
+                while(cont < numero){
+                    int random = r.nextInt(respuesta.getJSONArray("items").length());
+                    if(!usados.contains(random)) {
+                        aux = respuesta.getJSONArray("items").getJSONObject(cont).getJSONObject("track");
+                        System.out.println("Canción número " + cont + ": " + aux);
+                        Cancion c = new Cancion(aux.getString("name"),
+                                new URL("https://api.spotify.com/v1/tracks/" + aux.getString("id")),
+                                stringArtistas(aux.getJSONArray("artists")), this.helper);
+                        cont++;
+                        usados.add(random);
+                    }
                 }
             }else{
                 System.out.println("ERROR AL EJECUTAR LA OPERACIÓN");
@@ -73,10 +91,36 @@ public  class Spotify {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
         return null;
+    }
+
+    private String stringArtistas(JSONArray artists) {
+        JSONObject artista;
+        StringBuilder sb =  new StringBuilder();
+
+        for(int cont = 0; cont < artists.length();cont++){
+            try {
+                artista = artists.getJSONObject(cont);
+                sb.append(artista.getString("name") );
+                if(cont != artists.length()-1){
+                    sb.append(", ");
+                }else{
+                    sb.append(".");
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return sb.toString();
     }
 
     public class SpotifyTask extends AsyncTask{

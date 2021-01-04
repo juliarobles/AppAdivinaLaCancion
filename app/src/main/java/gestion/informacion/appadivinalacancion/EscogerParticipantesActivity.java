@@ -142,10 +142,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 //aleatoriamente de la playlist. Esa List<Cancion> la meteríamos en el SingletonMap y ya en cada ronda se reproduciría .get(rondasJugadas) de
                 //esa lista. No sé si se puede hacer así pero ahí está la idea.
 
-                String [] partes = partida.getPlaylist().toString().split("/");
-                Spotify sp = new Spotify();
-                sp.getCancionesFromPlaylist(partes[partes.length-1]);
-                Toast.makeText(getApplicationContext(), partes[partes.length-1] + " id de la playlist", Toast.LENGTH_SHORT).show();
+
 
                 //Comienzo el juego
                 Intent intent = new Intent(this, JugarRondaSonarActivity.class);

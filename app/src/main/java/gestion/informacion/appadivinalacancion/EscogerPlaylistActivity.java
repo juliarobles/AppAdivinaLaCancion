@@ -24,6 +24,7 @@ import gestion.informacion.appadivinalacancion.util.Otros.ListaPlaylistAdapter;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
+import gestion.informacion.appadivinalacancion.util.Otros.Spotify;
 import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
 
 public class EscogerPlaylistActivity extends AppCompatActivity {
@@ -171,6 +172,13 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
 
                     //Creamos la partida
                     Partida partida = new Partida(new Date(), rondas, url, helper);
+
+                    //Creamos la lista de canciones que va a sonar
+                    String [] partes = partida.getPlaylist().toString().split("/");
+                    Spotify sp = new Spotify(this.helper);
+                    partida.setCanciones(sp.getCancionesFromPlaylist(partes[partes.length-1], rondas));
+
+                    //Guardamos los datos finales de la partida
                     SingletonMap.getInstancia().put("partida", partida);
 
                     //Pasamos a la siguiente pantalla
