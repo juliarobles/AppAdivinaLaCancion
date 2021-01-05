@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -16,10 +18,15 @@ import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
+import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
+import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
+import gestion.informacion.appadivinalacancion.util.Otros.Spotify;
 
 public class JugarRondaSonarActivity extends AppCompatActivity {
 
@@ -33,7 +40,10 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
     private int rondasJugadas;
     private Chronometer cronometro;
     private long pauseOffset;
-
+    private Cancion cancionActual;
+    private Spotify sp;
+    private BBDD_Helper helper;
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,12 +90,25 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
                 }
             }
         });
+        helper = new BBDD_Helper(getApplicationContext());
+        sp = new Spotify(helper);
+        cancionActual = ((Partida)SingletonMap.getInstancia().get("partida")).getCanciones().get(this.rondasJugadas);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        try {
+            mediaPlayer.setDataSource(cancionActual.getUrl().toString());
+            mediaPlayer.prepare(); // might take long! (for buffering, etc)
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void respuestaBotonPlay(android.view.View v){
         if (parado){
             //WANY. Aqui deberia seguir sonando la cancion o empezando
+            mediaPlayer.start();
             //El temporizador sigue corriendo
             cronometro.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             cronometro.start();
@@ -96,6 +119,7 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
             parado = false;
         } else {
             //WANY. Aqui debería pararse la canción
+            mediaPlayer.pause();
             //Aqui el temporizador se pausa
             cronometro.stop();
             pauseOffset = SystemClock.elapsedRealtime() - cronometro.getBase();

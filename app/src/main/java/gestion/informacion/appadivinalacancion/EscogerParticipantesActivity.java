@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
+import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
 import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.ListaJugadoresAdapter;
@@ -134,10 +135,14 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         try {
             if(numParticipantes >= 1){
                 Map map = SingletonMap.getInstancia();
-
+                Spotify sp = new Spotify(this.helper);
                 //Creo la partida de verdad
-                //Playlist playlist = new Playlist(RELLENA ESTO WANY)
-                Partida partidaDefinitiva = new Partida(partidaProvisional.getFecha(), partidaProvisional.getRondas(), null, helper); //SUSTITUYE null POR PLAYLIST
+                String [] partes = partidaProvisional.getPlaylist().toString().split("/|\\?");
+
+                Playlist playlist = sp.getPlaylistFromUrl(partes[4]);
+                System.out.println(playlist);
+                System.out.println(playlist.getNombre());
+                Partida partidaDefinitiva = new Partida(partidaProvisional.getFecha(), partidaProvisional.getRondas(), playlist, helper); //SUSTITUYE null POR PLAYLIST
 
                 //Establezco los jugadores como definitivos (osea los guardo en la bd)
                 partidaDefinitiva.setJugadores(jugadores, helper);
@@ -149,10 +154,9 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 map.put("rondasJugadas", 0);
 
                 //Creamos la lista de canciones que va a sonar
-                String [] partes = partidaProvisional.getPlaylist().toString().split("/");
-                Spotify sp = new Spotify(this.helper);
-                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[partes.length-1], partidaProvisional.getRondas()));
-                Toast.makeText(getApplicationContext(), partes[partes.length-1] + " id de la playlist", Toast.LENGTH_SHORT).show();
+
+                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[4], partidaProvisional.getRondas()));
+                map.replace("partida", partidaDefinitiva);
 
                 //Comienzo el juego
                 Intent intent = new Intent(this, JugarRondaSonarActivity.class);
