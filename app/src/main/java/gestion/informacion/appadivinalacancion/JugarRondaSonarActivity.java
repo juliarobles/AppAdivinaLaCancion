@@ -108,7 +108,7 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
 
     public void respuestaBotonPlay(android.view.View v){
         if (parado){
-            //WANY. Aqui deberia seguir sonando la cancion o empezando
+
             mediaPlayer.start();
             //El temporizador sigue corriendo
             cronometro.setBase(SystemClock.elapsedRealtime() - pauseOffset);
@@ -119,7 +119,8 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
             rotar.resume();
             parado = false;
         } else {
-            //WANY. Aqui debería pararse la canción
+            System.out.println("TIEMPO TRANSCURRIDO: " +(SystemClock.elapsedRealtime() -  cronometro.getBase()));
+
             mediaPlayer.pause();
             //Aqui el temporizador se pausa
             cronometro.stop();
@@ -137,6 +138,7 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         //AQUI VA UN DIALOG QUE ME DA PEREZA AÑADIR, ES TARDE
         //AQUI SE DEBEN CALCULAR LOS POSIBLES PUNTOS RESPECTO AL TEMPORIZADOR
         //AL ACEPTAR EL DIALOG IRIAMOS A LA PANTALLA DE RESULTADO
+        SingletonMap.getInstancia().put("puntos", SystemClock.elapsedRealtime() - cronometro.getBase());
         Intent intent = new Intent(this, JugarRondaRespuestaActivity.class);
         startActivity(intent);
     }
