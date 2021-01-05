@@ -25,7 +25,8 @@ public class Partida {
     private List<Jugador> jugadores;
     private List<Cancion> canciones;
 
-    //------------------------------------------------------------
+
+//------------------------------------------------------------
     // Constructores
     //------------------------------------------------------------
 
@@ -258,6 +259,9 @@ public class Partida {
     public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
     }*/
+    public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+    }
 
     private void actualizar(SQLiteDatabase db, ContentValues values) throws Exception {
         int count = db.update(
