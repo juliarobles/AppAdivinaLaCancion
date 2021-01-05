@@ -138,8 +138,17 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 Spotify sp = new Spotify(this.helper);
                 //Creo la partida de verdad
                 String [] partes = partidaProvisional.getPlaylist().toString().split("/|\\?");
+                String id;
+                System.out.println(partes[3]);
+                if(!partes[3].equals("v1")){
+                     id = partes[4];
+                    System.out.println(id);
+                }else{
+                    id = partes[5];
+                    System.out.println(id);
+                }
+                Playlist playlist = sp.getPlaylistFromUrl(id);
 
-                Playlist playlist = sp.getPlaylistFromUrl(partes[4]);
                 System.out.println(playlist);
                 System.out.println(playlist.getNombre());
                 Partida partidaDefinitiva = new Partida(partidaProvisional.getFecha(), partidaProvisional.getRondas(), playlist, helper); //SUSTITUYE null POR PLAYLIST
@@ -155,7 +164,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
 
                 //Creamos la lista de canciones que va a sonar
 
-                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[4], partidaProvisional.getRondas()));
+                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(id, partidaProvisional.getRondas()));
                 map.replace("partida", partidaDefinitiva);
 
                 //Comienzo el juego
