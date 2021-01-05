@@ -107,4 +107,7 @@ public class BBDD_Struct {
 
     protected static final String SQL_DELETE_CANCIONPARTIDA =
             "DROP TABLE IF EXISTS " + TABLA_CANCIONPARTIDA;
+
+    protected static final String SQL_DELETE_PLAYLIST =
+            "DROP TABLE IF EXISTS " + TABLA_PLAYLIST;
 }

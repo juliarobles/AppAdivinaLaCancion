@@ -3,6 +3,7 @@ package gestion.informacion.appadivinalacancion.util.Otros;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,10 +33,14 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
-        public MyViewHolder(TextView v) {
+        public TextView nombre;
+        public TextView propietario;
+        public ImageView imagen;
+        public MyViewHolder(View v) {
             super(v);
-            textView = v;
+            nombre = v.findViewById(R.id.item_nombrePlaylist);
+            propietario = v.findViewById(R.id.item_propPlaylist);
+            imagen = v.findViewById(R.id.item_avatarPlaylist);
         }
     }
 
@@ -48,7 +53,7 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
     @Override
     public ListaPlaylistAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_playlistlist, parent, false);
         v.setOnClickListener(this);
         return new MyViewHolder(v);
@@ -59,7 +64,10 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(datos.get(position).toString());
+        Tupla t = datos.get(position);
+        holder.nombre.setText(t.getX1());
+        holder.propietario.setText(t.getProp());
+        //holder.imagen.
 
     }
 

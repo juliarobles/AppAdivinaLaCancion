@@ -15,6 +15,7 @@ public class BBDD_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(BBDD_Struct.SQL_CREATE_PLAYLIST);
         db.execSQL(BBDD_Struct.SQL_CREATE_PARTIDA);
         db.execSQL(BBDD_Struct.SQL_CREATE_JUGADOR);
         db.execSQL(BBDD_Struct.SQL_CREATE_CANCION);
@@ -24,7 +25,7 @@ public class BBDD_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(BBDD_Struct.SQL_CREATE_PLAYLIST);
+        db.execSQL(BBDD_Struct.SQL_DELETE_PLAYLIST);
         db.execSQL(BBDD_Struct.SQL_DELETE_PARTIDA);
         db.execSQL(BBDD_Struct.SQL_DELETE_JUGADOR);
         db.execSQL(BBDD_Struct.SQL_DELETE_CANCION);

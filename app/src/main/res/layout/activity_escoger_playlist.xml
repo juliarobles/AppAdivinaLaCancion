@@ -78,8 +78,10 @@
             android:textSize="24sp" />
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs_elegirPlaylist"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@color/moradito"
             app:tabIndicatorColor="@color/amarillito"
             app:tabSelectedTextColor="@color/amarillito"
@@ -89,21 +91,18 @@
                 android:id="@+id/tab_ejemplos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="cambiarPlaylistEjemplos"
                 android:text="@string/tab_ejemplos" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_masUsadas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="cambiarPlaylistMasUsadas"
                 android:text="@string/tab_masUsadas" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_recientes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="cambiarPlaylistRecientes"
                 android:text="@string/tab_recientes" />
 
         </com.google.android.material.tabs.TabLayout>
