@@ -23,6 +23,13 @@ public class Jugador {
     // Constructores
     //------------------------------------------------------------
 
+    //Constructor unicamente para spinner
+    public Jugador(String nombre, String color){
+        this.nombre = nombre;
+        this.color = color;
+        this.puntos = -2;
+    }
+
     /**
      * Este constructor es para crear un nuevo jugador. Lo guarda en la bd.
      * @param nombre

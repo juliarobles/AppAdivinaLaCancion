@@ -19,6 +19,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="@string/label_verResultado"
             android:textColor="@color/white"
             android:textSize="24sp" />
@@ -35,6 +36,7 @@
             android:id="@+id/textNombreCancion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textColor="@color/amarillito"
             android:textSize="30sp" />
 
@@ -42,6 +44,7 @@
             android:id="@+id/text_autorCancion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -51,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/labelQuienHaAcertado"
-            android:textColor="@color/white"
+            android:textColor="@color/amarillito"
             android:textSize="18sp" />
 
         <Spinner
@@ -62,7 +65,7 @@
         <Button
             android:id="@+id/btn_siguienteRonda"
             android:layout_width="340dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:onClick="respuestaSiguienteRonda"

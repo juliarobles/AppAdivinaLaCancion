@@ -14,15 +14,18 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
+import gestion.informacion.appadivinalacancion.util.Otros.SpinnerJugadoresAdapter;
 
 public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
     private ImageView imagenCancion;
     private BBDD_Helper helper;
     private int rondasJugadas;
+    private List<Jugador> jugadores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +45,6 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
         //Helper
         helper = new BBDD_Helper(this);
-
-        //Cargamos la lista de jugadores en el Spinner de ganadores
 
         //Sacamos los elementos del view
         ganador = (Spinner)findViewById(R.id.ganador);
@@ -62,41 +64,28 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         autor.setText(cancion.getAutor());
 
         //Cargamos la lista de jugadores en el Spinner de ganadores
-        List<String> jugadores = new LinkedList<>();
-        jugadores.add("Nadie ha acertado");
+        jugadores = new ArrayList<>();
+        jugadores.add(new Jugador(getString(R.string.nadieLaHaAcertado), String.valueOf(R.drawable.ic_triste)));
         for(Jugador j: partida.getJugadores()){
-            jugadores.add(j.getNombre());
+            jugadores.add(j);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,
-                jugadores);
+        SpinnerJugadoresAdapter adapter = new  SpinnerJugadoresAdapter(this, jugadores, getString(R.string.labelPuntosActuales));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ganador.setAdapter(adapter);
-        ganador.setSelection(adapter.getPosition("Nadie ha acertado"));
-
-        //Cargamos la imagen de la canción
-        imagenCancion = findViewById(R.id.imagenCancion);
-
+        ganador.setSelection(0);
      }
 
     public void respuestaSiguienteRonda(android.view.View v){
-        //SIN ACABAR
-        //AQUI SE DEBERIAN SUMAR LOS PUNTOS QUE SEA AL JUGADOR QUE SEA O A NADIE
-
         Map info = SingletonMap.getInstancia();
         long puntos = (long)info.get("puntos");
-        Partida partida = (Partida) info.get("partida");
-        List<Jugador> jug = partida.getJugadores();
 
-        for(Jugador j :jug){
+        Jugador j = (Jugador) ganador.getSelectedItem();
+        if(j.getPuntos() >= 0){ //Asi no cuento el no haber acertado
             System.out.println(j.getPuntos() + "PUNTOS DEL JUGADOR " + j.getNombre());
-            if(j.getNombre().equals(ganador.getSelectedItem())){
-                try {
-                    j.setPuntos(((int)(j.getPuntos()+ (35000 - puntos))), helper);
-
-                } catch (AppException e) {
-                    e.printStackTrace();
-                }
+            try {
+                j.setPuntos(((int)(j.getPuntos()+ (35000 - puntos)))/1000, helper);
+            } catch (AppException e) {
+                e.printStackTrace();
             }
         }
 
