@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.LinkedList;
@@ -20,6 +25,8 @@ import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 
 public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
+    private TextView titulo;
+    private TextView autor;
     private Spinner ganador;
     private ImageView imagenCancion;
     private int rondasJugadas;
@@ -32,13 +39,20 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
         //Sacamos los elementos del view
         ganador = (Spinner)findViewById(R.id.ganador);
-        imagenCancion = findViewById(R.id.imagenCancion);
+        imagenCancion = (ImageView) findViewById(R.id.imagenCancion);
+        titulo = (TextView) findViewById(R.id.textNombreCancion);
+        autor = (TextView) findViewById(R.id.text_autorCancion);
 
         //Sacamos la partida y la cancion de la ronda
         Map info = SingletonMap.getInstancia();
         Partida partida = (Partida) SingletonMap.getInstancia().get("partida");
-        rondasJugadas = ((int) info.get("rondasJugadas")) + 1;
+        rondasJugadas = (int) info.get("rondasJugadas");
         Cancion cancion = partida.getCanciones().get(rondasJugadas-1);
+
+        //Rellenamos los datos de la cancion
+        Picasso.get().load(cancion.getImagen().toString()).into(imagenCancion);
+        titulo.setText(cancion.getNombre());
+        autor.setText(cancion.getAutor());
 
         //Cargamos la lista de jugadores en el Spinner de ganadores
         List<String> jugadores = new LinkedList<>();

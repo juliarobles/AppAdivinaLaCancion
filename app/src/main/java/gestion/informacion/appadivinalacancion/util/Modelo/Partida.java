@@ -174,7 +174,7 @@ public class Partida {
     //CONSULTA DE PLAYLIST MAS RECIENTES TOP 5
     public static List<Tupla> playlistRecientes(BBDD_Helper helper) throws MalformedURLException {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
+        Cursor c = db.rawQuery("SELECT DISTINCT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
                 + BBDD_Struct.PROPIETARIO_PLAYLIST+ ", pl." + BBDD_Struct.IMAGEN_PLAYLIST
                 + " FROM " + BBDD_Struct.TABLA_PARTIDA + " p, " + BBDD_Struct.TABLA_PLAYLIST + " pl"
                 + " WHERE p." + BBDD_Struct.ID_PLAYLIST_PARTIDA + " = pl." + BBDD_Struct.ID_PLAYLIST
