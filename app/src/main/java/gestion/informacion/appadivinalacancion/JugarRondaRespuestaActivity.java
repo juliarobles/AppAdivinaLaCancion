@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
@@ -21,13 +22,23 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
     private Spinner ganador;
     private ImageView imagenCancion;
+    private int rondasJugadas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugar_ronda_respuesta);
         getSupportActionBar().hide();
+
+        //Sacamos los elementos del view
         ganador = (Spinner)findViewById(R.id.ganador);
+        imagenCancion = findViewById(R.id.imagenCancion);
+
+        //Sacamos la partida y la cancion de la ronda
+        Map info = SingletonMap.getInstancia();
         Partida partida = (Partida) SingletonMap.getInstancia().get("partida");
+        rondasJugadas = ((int) info.get("rondasJugadas")) + 1;
+        Cancion cancion = partida.getCanciones().get(rondasJugadas-1);
 
         //Cargamos la lista de jugadores en el Spinner de ganadores
         List<String> jugadores = new LinkedList<>();
@@ -39,11 +50,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
                 jugadores);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ganador.setAdapter(adapter);
-
-
-        //Cargamos la imagen de la canción
-        imagenCancion = findViewById(R.id.imagenCancion);
-
+        
      }
 
     public void respuestaSiguienteRonda(android.view.View v){
