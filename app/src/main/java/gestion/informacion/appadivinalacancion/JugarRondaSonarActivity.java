@@ -108,7 +108,6 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
 
     public void respuestaBotonPlay(android.view.View v){
         if (parado){
-
             mediaPlayer.start();
             //El temporizador sigue corriendo
             cronometro.setBase(SystemClock.elapsedRealtime() - pauseOffset);
@@ -119,8 +118,6 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
             rotar.resume();
             parado = false;
         } else {
-            System.out.println("TIEMPO TRANSCURRIDO: " +(SystemClock.elapsedRealtime() -  cronometro.getBase()));
-
             mediaPlayer.pause();
             //Aqui el temporizador se pausa
             cronometro.stop();

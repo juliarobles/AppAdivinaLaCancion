@@ -13,23 +13,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
+import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 
 public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
     private Spinner ganador;
     private ImageView imagenCancion;
+    private BBDD_Helper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugar_ronda_respuesta);
         getSupportActionBar().hide();
-        ganador = (Spinner)findViewById(R.id.ganador);
-        Partida partida = (Partida) SingletonMap.getInstancia().get("partida");
+
+        //Helper
+        helper = new BBDD_Helper(this);
 
         //Cargamos la lista de jugadores en el Spinner de ganadores
+        ganador = (Spinner)findViewById(R.id.ganador);
+        Partida partida = (Partida) SingletonMap.getInstancia().get("partida");
         List<String> jugadores = new LinkedList<>();
         jugadores.add("Nadie ha acertado");
         for(Jugador j: partida.getJugadores()){
@@ -55,7 +61,19 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         Map info = SingletonMap.getInstancia();
         long puntos = (long)info.get("puntos");
         Partida partida = (Partida) info.get("partida");
+        List<Jugador> jug = partida.getJugadores();
 
+        for(Jugador j :jug){
+            System.out.println(j.getPuntos() + "PUNTOS DEL JUGADOR " + j.getNombre());
+            if(j.getNombre().equals(ganador.getSelectedItem())){
+                try {
+                    j.setPuntos(((int)(j.getPuntos()+ (35000 - puntos))), helper);
+
+                } catch (AppException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         if((int)info.get("rondasJugadas") < ((Partida)info.get("partida")).getRondas()){
             Intent intent = new Intent(this, JugarRondaSonarActivity.class);
