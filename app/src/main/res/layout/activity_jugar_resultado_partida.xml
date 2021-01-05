@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".JugarResultadoPartidaActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="197dp"
+        tools:layout_editor_absoluteY="377dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resultados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
