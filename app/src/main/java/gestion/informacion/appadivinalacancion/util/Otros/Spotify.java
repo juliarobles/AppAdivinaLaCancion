@@ -166,7 +166,7 @@ public  class Spotify {
             res = task.execute(obj).get();
             JSONObject respuesta = (JSONObject)res;
             pl = new Playlist(new URL(url), new URL(respuesta.getJSONArray("images").getJSONObject(0).getString("url")),
-                        respuesta.getString("owner"), respuesta.getString("name"), helper );
+                        respuesta.getJSONObject("owner").getString("display_name"), respuesta.getString("name"), helper );
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
