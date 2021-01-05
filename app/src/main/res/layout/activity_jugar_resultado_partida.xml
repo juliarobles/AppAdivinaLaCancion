@@ -13,9 +13,17 @@
         tools:layout_editor_absoluteX="197dp"
         tools:layout_editor_absoluteY="377dp">
 
+        <TextView
+            android:id="@+id/textResultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="30sp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/resultados"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

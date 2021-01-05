@@ -96,7 +96,7 @@ public class Jugador {
      * @param c
      * @param helper
      */
-    public Jugador(Cursor c, BBDD_Helper helper) {
+    protected Jugador(Cursor c, BBDD_Helper helper) {
         this.id = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_JUGADOR));
         this.nombre = c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_JUGADOR));
         this.puntos = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.PUNTOS_JUGADOR));
