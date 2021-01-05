@@ -10,13 +10,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-16dp">
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AQUI VA TODA LA INFO DE LA CANCION ES TARDE ASI QUE LO HAGO MAÑANA, PERO TE HACES A LA IDEA" />
+
+        <ImageView
+            android:id="@+id/imagenCancion"
+            android:layout_width="178dp"
+            android:layout_height="169dp"
+            app:srcCompat="@drawable/ic_disco_de_vinilo_naranja" />
 
         <Spinner
             android:id="@+id/ganador"
@@ -29,6 +38,7 @@
             android:layout_height="wrap_content"
             android:onClick="respuestaSiguienteRonda"
             android:text="CONTINUAR" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

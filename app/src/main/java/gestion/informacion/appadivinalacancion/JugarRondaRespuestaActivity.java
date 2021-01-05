@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.lang.reflect.Array;
@@ -19,6 +20,7 @@ import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
     private Spinner ganador;
+    private ImageView imagenCancion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         ganador = (Spinner)findViewById(R.id.ganador);
         Partida partida = (Partida) SingletonMap.getInstancia().get("partida");
 
+        //Cargamos la lista de jugadores en el Spinner de ganadores
         List<String> jugadores = new LinkedList<>();
         for(Jugador j: partida.getJugadores()){
             jugadores.add(j.getNombre());
@@ -36,6 +39,11 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
                 jugadores);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ganador.setAdapter(adapter);
+
+
+        //Cargamos la imagen de la canción
+        imagenCancion = findViewById(R.id.imagenCancion);
+
      }
 
     public void respuestaSiguienteRonda(android.view.View v){
@@ -43,6 +51,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         //AQUI SE DEBERIAN SUMAR LOS PUNTOS QUE SEA AL JUGADOR QUE SEA O A NADIE
 
         Map info = SingletonMap.getInstancia();
+
 
         if((int)info.get("rondasJugadas") < ((Partida)info.get("partida")).getRondas()){
             Intent intent = new Intent(this, JugarRondaSonarActivity.class);
