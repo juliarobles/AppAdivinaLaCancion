@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,6 +38,8 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
     private RecyclerView listaPlaylist;
     private List<Tupla> playlists;
     private BBDD_Helper helper;
+    private ListaPlaylistAdapter adapter;
+    private TabLayout tabs;
 
     public static String getParamsString(Map<String, String> params)
             throws UnsupportedEncodingException {
@@ -67,12 +71,13 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         urlPlaylist = (TextView)findViewById(R.id.urlPlaylist);
         numRondas = (TextView)findViewById(R.id.numRondas);
         listaPlaylist = (RecyclerView)findViewById(R.id.listaPlaylist);
+        tabs = (TabLayout) findViewById(R.id.tabs_elegirPlaylist);
 
         //Configuramos la recyclerView
         listaPlaylist.setHasFixedSize(true);
         listaPlaylist.setLayoutManager(new LinearLayoutManager(this));
         ponerEjemplos();
-        ListaPlaylistAdapter adapter = new ListaPlaylistAdapter(playlists);
+        adapter = new ListaPlaylistAdapter(playlists);
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +88,42 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         });
         listaPlaylist.setAdapter(adapter);
 
-        //activarSpotify();
+        //Configuramos el tabs
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                if(pos == 1) { //MAS USADAS
+                    try {
+                        playlists.clear();
+                        playlists.addAll(Partida.playlistMasUsadas(helper));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                } else if (pos == 2){
+                    try {
+                        playlists.clear();
+                        playlists.addAll(Partida.playlistRecientes(helper));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                } else { //EJEMPLOS
+                    ponerEjemplos();
+                }
+                adapter.notifyDataSetChanged();
+                listaPlaylist.removeAllViews();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void activarSpotify(){
@@ -150,11 +190,15 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
     }
 
     private void ponerEjemplos() {
-        playlists = new ArrayList<>();
-        playlists.add(new Tupla("El Top 50 Global", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF"));
-        playlists.add(new Tupla("El Top 50 de España", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9"));
-        playlists.add(new Tupla("Los 50 más virales global", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9"));
-        playlists.add(new Tupla("Los 50 más virales de España", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj"));
+        if(playlists == null){
+            playlists = new ArrayList<>();
+        } else {
+            playlists.clear();
+        }
+        playlists.add(new Tupla("El Top 50 Global", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF", null, "spotifycharts"));
+        playlists.add(new Tupla("El Top 50 de España", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9",null, "spotifycharts"));
+        playlists.add(new Tupla("Los 50 más virales global", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9", null, "spotifycharts"));
+        playlists.add(new Tupla("Los 50 más virales de España", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj", null, "spotifycharts"));
     }
 
     public void respuestaEscogerPlaylist(android.view.View v){
@@ -187,8 +231,8 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         }
     }
 
-    public void cambiarPlaylistMasUsadas(android.view.View v){
-        //playlists =
+    public void cambiarPlaylist(android.view.View v){
+
     }
 
     public void cambiarPlaylistRecientes(android.view.View v){
@@ -196,7 +240,7 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
     }
 
     public void cambiarPlaylistEjemplos(android.view.View v){
-        ponerEjemplos();
+        ;
     }
 
 

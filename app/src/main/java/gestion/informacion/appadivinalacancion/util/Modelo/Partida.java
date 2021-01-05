@@ -15,6 +15,7 @@ import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Struct;
 import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
+import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
 
 public class Partida {
     private int id;
@@ -144,8 +145,57 @@ public class Partida {
     }
 
     //CONSULTA DE PLAYLIST MAS USADAS TOP 5
+    public static List<Tupla> playlistMasUsadas(BBDD_Helper helper) throws MalformedURLException {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
+                + BBDD_Struct.PROPIETARIO_PLAYLIST+ ", pl." + BBDD_Struct.IMAGEN_PLAYLIST + ", COUNT(*)"
+                + " FROM " + BBDD_Struct.TABLA_PARTIDA + " p, " + BBDD_Struct.TABLA_PLAYLIST + " pl"
+                + " WHERE p." + BBDD_Struct.ID_PLAYLIST_PARTIDA + " = pl." + BBDD_Struct.ID_PLAYLIST
+                + " GROUP BY "+ BBDD_Struct.ID_PLAYLIST_PARTIDA
+                + " ORDER BY COUNT(*) DESC"
+                + " LIMIT 5", null);
+
+        List<Tupla> list = new ArrayList<>();
+        if (c.moveToFirst()){
+            while (!c.isAfterLast()){
+                list.add(new Tupla(
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
+                        new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST))),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.PROPIETARIO_PLAYLIST))
+                ));
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return list;
+    }
 
     //CONSULTA DE PLAYLIST MAS RECIENTES TOP 5
+    public static List<Tupla> playlistRecientes(BBDD_Helper helper) throws MalformedURLException {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
+                + BBDD_Struct.PROPIETARIO_PLAYLIST+ ", pl." + BBDD_Struct.IMAGEN_PLAYLIST
+                + " FROM " + BBDD_Struct.TABLA_PARTIDA + " p, " + BBDD_Struct.TABLA_PLAYLIST + " pl"
+                + " WHERE p." + BBDD_Struct.ID_PLAYLIST_PARTIDA + " = pl." + BBDD_Struct.ID_PLAYLIST
+                + " ORDER BY "+ BBDD_Struct.FECHA_PARTIDA +" DESC"
+                + " LIMIT 5", null);
+
+        List<Tupla> list = new ArrayList<>();
+        if (c.moveToFirst()){
+            while (!c.isAfterLast()){
+                list.add(new Tupla(
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
+                        new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST))),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.PROPIETARIO_PLAYLIST))
+                ));
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return list;
+    }
 
     //------------------------------------------------------------
     // Borrar
