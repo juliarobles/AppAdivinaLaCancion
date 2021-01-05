@@ -1,4 +1,4 @@
-package gestion.informacion.appadivinalacancion.util.Otros;
+package gestion.informacion.appadivinalacancion.util.Adaptadores;
 
 import android.view.LayoutInflater;
 import android.view.View;

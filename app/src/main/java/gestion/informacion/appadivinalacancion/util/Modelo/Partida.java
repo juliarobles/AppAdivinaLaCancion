@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +14,7 @@ import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Struct;
 import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
-import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
+import gestion.informacion.appadivinalacancion.util.Otros.PlaylistProvisional;
 
 public class Partida {
     private int id;
@@ -145,7 +144,7 @@ public class Partida {
     }
 
     //CONSULTA DE PLAYLIST MAS USADAS TOP 5
-    public static List<Tupla> playlistMasUsadas(BBDD_Helper helper) throws MalformedURLException {
+    public static List<PlaylistProvisional> playlistMasUsadas(BBDD_Helper helper) throws MalformedURLException {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
                 + BBDD_Struct.PROPIETARIO_PLAYLIST+ ", pl." + BBDD_Struct.IMAGEN_PLAYLIST + ", COUNT(*)"
@@ -155,10 +154,10 @@ public class Partida {
                 + " ORDER BY COUNT(*) DESC"
                 + " LIMIT 5", null);
 
-        List<Tupla> list = new ArrayList<>();
+        List<PlaylistProvisional> list = new ArrayList<>();
         if (c.moveToFirst()){
             while (!c.isAfterLast()){
-                list.add(new Tupla(
+                list.add(new PlaylistProvisional(
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST)),
@@ -172,7 +171,7 @@ public class Partida {
     }
 
     //CONSULTA DE PLAYLIST MAS RECIENTES TOP 5
-    public static List<Tupla> playlistRecientes(BBDD_Helper helper) throws MalformedURLException {
+    public static List<PlaylistProvisional> playlistRecientes(BBDD_Helper helper) throws MalformedURLException {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT DISTINCT pl." + BBDD_Struct.URL_PLAYLIST  + ", pl." + BBDD_Struct.NOMBRE_PLAYLIST + ", pl."
                 + BBDD_Struct.PROPIETARIO_PLAYLIST+ ", pl." + BBDD_Struct.IMAGEN_PLAYLIST
@@ -181,10 +180,10 @@ public class Partida {
                 + " ORDER BY "+ BBDD_Struct.FECHA_PARTIDA +" DESC"
                 + " LIMIT 5", null);
 
-        List<Tupla> list = new ArrayList<>();
+        List<PlaylistProvisional> list = new ArrayList<>();
         if (c.moveToFirst()){
             while (!c.isAfterLast()){
-                list.add(new Tupla(
+                list.add(new PlaylistProvisional(
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST)),

@@ -1,4 +1,4 @@
-package gestion.informacion.appadivinalacancion.util.Otros;
+package gestion.informacion.appadivinalacancion.util.Adaptadores;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import gestion.informacion.appadivinalacancion.R;
+import gestion.informacion.appadivinalacancion.util.Otros.PlaylistProvisional;
 
 public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdapter.MyViewHolder> implements View.OnClickListener {
-    private List<Tupla> datos;
+    private List<PlaylistProvisional> datos;
     private View.OnClickListener listener;
 
     public void setOnClickListener(View.OnClickListener listener){
@@ -47,7 +47,7 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListaPlaylistAdapter(List<Tupla> myDataset) {
+    public ListaPlaylistAdapter(List<PlaylistProvisional> myDataset) {
         datos = myDataset;
     }
 
@@ -66,8 +66,8 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Tupla t = datos.get(position);
-        holder.nombre.setText(t.getX1());
+        PlaylistProvisional t = datos.get(position);
+        holder.nombre.setText(t.getTitulo());
         holder.propietario.setText(t.getProp());
         Picasso.get().load(t.getImagen()).into(holder.imagen);
 

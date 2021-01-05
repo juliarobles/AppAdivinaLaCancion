@@ -12,23 +12,18 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
-import gestion.informacion.appadivinalacancion.util.Otros.ListaPlaylistAdapter;
+import gestion.informacion.appadivinalacancion.util.Adaptadores.ListaPlaylistAdapter;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.PartidaProvisional;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
-import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
+import gestion.informacion.appadivinalacancion.util.Otros.PlaylistProvisional;
 
 public class EscogerPlaylistActivity extends AppCompatActivity {
 
@@ -36,7 +31,7 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
     private TextView urlPlaylist;
     private TextView numRondas;
     private RecyclerView listaPlaylist;
-    private List<Tupla> playlists;
+    private List<PlaylistProvisional> playlists;
     private BBDD_Helper helper;
     private ListaPlaylistAdapter adapter;
     private TabLayout tabs;
@@ -64,9 +59,9 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tupla t = playlists.get(listaPlaylist.getChildAdapterPosition(view));
-                urlPlaylist.setText(t.getX2());
-                Toast.makeText(getApplicationContext(), getString(R.string.mensaje_playlistCambiada) + " " + t.getX1(), Toast.LENGTH_SHORT).show();
+                PlaylistProvisional t = playlists.get(listaPlaylist.getChildAdapterPosition(view));
+                urlPlaylist.setText(t.getUrlPl());
+                Toast.makeText(getApplicationContext(), getString(R.string.mensaje_playlistCambiada) + " " + t.getTitulo(), Toast.LENGTH_SHORT).show();
             }
         });
         listaPlaylist.setAdapter(adapter);
@@ -115,10 +110,10 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         } else {
             playlists.clear();
         }
-        playlists.add(new Tupla("Global Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF", "https://charts-images.scdn.co/assets/locale_en/regional/daily/region_global_large.jpg", "spotifycharts"));
-        playlists.add(new Tupla("Spain Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9","https://charts-images.scdn.co/assets/locale_en/regional/daily/region_es_large.jpg", "spotifycharts"));
-        playlists.add(new Tupla("Global Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_global_large.jpg", "spotifycharts"));
-        playlists.add(new Tupla("Spain Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_es_large.jpg", "spotifycharts"));
+        playlists.add(new PlaylistProvisional("Global Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF", "https://charts-images.scdn.co/assets/locale_en/regional/daily/region_global_large.jpg", "spotifycharts"));
+        playlists.add(new PlaylistProvisional("Spain Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9","https://charts-images.scdn.co/assets/locale_en/regional/daily/region_es_large.jpg", "spotifycharts"));
+        playlists.add(new PlaylistProvisional("Global Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_global_large.jpg", "spotifycharts"));
+        playlists.add(new PlaylistProvisional("Spain Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_es_large.jpg", "spotifycharts"));
     }
 
     public void respuestaEscogerPlaylist(android.view.View v){

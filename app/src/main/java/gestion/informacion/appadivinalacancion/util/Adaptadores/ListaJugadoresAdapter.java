@@ -1,4 +1,4 @@
-package gestion.informacion.appadivinalacancion.util.Otros;
+package gestion.informacion.appadivinalacancion.util.Adaptadores;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import gestion.informacion.appadivinalacancion.R;
+import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 
 public class ListaJugadoresAdapter extends RecyclerView.Adapter<ListaJugadoresAdapter.MyViewHolder> implements View.OnClickListener {
     private List<JugadorProvisional> jugadores;

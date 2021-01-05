@@ -22,7 +22,7 @@ import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
 import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
-import gestion.informacion.appadivinalacancion.util.Otros.ListaJugadoresAdapter;
+import gestion.informacion.appadivinalacancion.util.Adaptadores.ListaJugadoresAdapter;
 import gestion.informacion.appadivinalacancion.util.Otros.PartidaProvisional;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 import gestion.informacion.appadivinalacancion.util.Otros.Spotify;

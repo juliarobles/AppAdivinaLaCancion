@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Map;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
-import gestion.informacion.appadivinalacancion.util.Otros.PuntosAdapter;
+import gestion.informacion.appadivinalacancion.util.Adaptadores.PuntosAdapter;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 
 public class JugarResultadoPartidaActivity extends AppCompatActivity {

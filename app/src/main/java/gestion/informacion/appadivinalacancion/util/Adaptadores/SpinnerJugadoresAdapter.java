@@ -1,4 +1,4 @@
-package gestion.informacion.appadivinalacancion.util.Otros;
+package gestion.informacion.appadivinalacancion.util.Adaptadores;
 
 import android.content.Context;
 import android.view.Gravity;

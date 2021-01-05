@@ -4,18 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +20,7 @@ import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
-import gestion.informacion.appadivinalacancion.util.Otros.SpinnerJugadoresAdapter;
+import gestion.informacion.appadivinalacancion.util.Adaptadores.SpinnerJugadoresAdapter;
 
 public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
@@ -83,7 +78,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         if(j.getPuntos() >= 0){ //Asi no cuento el no haber acertado
             System.out.println(j.getPuntos() + "PUNTOS DEL JUGADOR " + j.getNombre());
             try {
-                j.setPuntos(((int)(j.getPuntos()+ (35000 - puntos)))/1000, helper);
+                j.setPuntos(((int)(j.getPuntos()+ ((35000 - puntos)/1000))), helper);
             } catch (AppException e) {
                 e.printStackTrace();
             }

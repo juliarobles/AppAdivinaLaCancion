@@ -1,34 +1,32 @@
 package gestion.informacion.appadivinalacancion.util.Otros;
 
-import java.net.URL;
-
-public class Tupla {
-    private String x1; //titulo
-    private String x2; //url
+public class PlaylistProvisional {
+    private String titulo; //titulo
+    private String urlPl; //url
     private String imagen;
     private String prop;
 
-    public Tupla(String x1, String x2, String url, String prop) {
-        this.x1 = x1;
-        this.x2 = x2;
+    public PlaylistProvisional(String titulo, String urlPl, String url, String prop) {
+        this.titulo = titulo;
+        this.urlPl = urlPl;
         this.imagen = url;
         this.prop = prop;
     }
 
-    public String getX1() {
-        return x1;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setX1(String x1) {
-        this.x1 = x1;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getX2() {
-        return x2;
+    public String getUrlPl() {
+        return urlPl;
     }
 
-    public void setX2(String x2) {
-        this.x2 = x2;
+    public void setUrlPl(String urlPl) {
+        this.urlPl = urlPl;
     }
 
     public String getImagen() {
@@ -49,6 +47,6 @@ public class Tupla {
 
     @Override
     public String toString() {
-        return x1;
+        return titulo;
     }
 }
