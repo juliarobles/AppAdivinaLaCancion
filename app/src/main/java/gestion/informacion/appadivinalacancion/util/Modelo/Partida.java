@@ -286,7 +286,24 @@ public class Partida {
 
         this.ganador = ganador;
     }
+    public List<Jugador> getJugadoresSortByPuntos(Partida partida, BBDD_Helper helper){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + BBDD_Struct.TABLA_JUGADOR + " j"
+        + " WHERE j." + BBDD_Struct.ID_PARTIDA_JUGADOR +" like " + partida.getId()
+        + " ORDER BY " + BBDD_Struct.PUNTOS_JUGADOR+" DESC", null);
 
+
+
+        List<Jugador> list = new ArrayList<>();
+        if (c.moveToFirst()){
+            while (!c.isAfterLast()){
+                list.add(new Jugador(c, helper));
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return list;
+    }
     public List<Jugador> getJugadores() {
         return jugadores;
     }
