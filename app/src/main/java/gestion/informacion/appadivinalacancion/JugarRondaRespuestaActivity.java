@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
@@ -51,9 +52,6 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ganador.setAdapter(adapter);
         ganador.setSelection(adapter.getPosition("Nadie ha acertado"));
-
-        //Cargamos la imagen de la canción
-        imagenCancion = findViewById(R.id.imagenCancion);
 
      }
 
