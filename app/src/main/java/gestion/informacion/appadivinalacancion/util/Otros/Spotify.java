@@ -75,7 +75,7 @@ public  class Spotify {
                         System.out.println("Canción número " + cont + ": " + aux);
                         Cancion c = new Cancion(aux.getString("name"),
                                 new URL("https://api.spotify.com/v1/tracks/" + aux.getString("id")),
-                                stringArtistas(aux.getJSONArray("artists")), this.helper);
+                                stringArtistas(aux.getJSONArray("artists")), null, this.helper);
                         cont++;
                         usados.add(random);
                     }

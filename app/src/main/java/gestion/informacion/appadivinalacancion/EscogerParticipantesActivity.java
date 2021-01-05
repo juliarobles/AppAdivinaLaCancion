@@ -148,9 +148,10 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 //Esta variable nos permitirá tener saber cuantas rondas hemos jugado
                 map.put("rondasJugadas", 0);
 
+                //Creamos la lista de canciones que va a sonar
                 String [] partes = partidaProvisional.getPlaylist().toString().split("/");
-                Spotify sp = new Spotify();
-                sp.getCancionesFromPlaylist(partes[partes.length-1]);
+                Spotify sp = new Spotify(this.helper);
+                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[partes.length-1], partidaProvisional.getRondas()));
                 Toast.makeText(getApplicationContext(), partes[partes.length-1] + " id de la playlist", Toast.LENGTH_SHORT).show();
 
                 //Comienzo el juego
