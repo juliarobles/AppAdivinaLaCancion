@@ -92,13 +92,14 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         });
         helper = new BBDD_Helper(getApplicationContext());
         sp = new Spotify(helper);
-        cancionActual = ((Partida)SingletonMap.getInstancia().get("partida")).getCanciones().get(this.rondasJugadas);
+        cancionActual = ((Partida)SingletonMap.getInstancia().get("partida")).getCanciones().get(this.rondasJugadas-1);
+        System.out.println(cancionActual.getUrl() + " NOMBRE DE LA CANCION");
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         try {
-            mediaPlayer.setDataSource(cancionActual.getUrl().toString());
-            mediaPlayer.prepare(); // might take long! (for buffering, etc)
+            mediaPlayer.setDataSource(sp.getPreviewCancion(cancionActual.getUrl().toString()));
+            mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
