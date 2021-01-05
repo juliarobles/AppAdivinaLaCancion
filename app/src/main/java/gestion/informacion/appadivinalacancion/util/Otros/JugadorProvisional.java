@@ -1,4 +1,6 @@
-package gestion.informacion.appadivinalacancion.util.Modelo;
+package gestion.informacion.appadivinalacancion.util.Otros;
+
+import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 
 public class JugadorProvisional {
 
@@ -6,12 +8,10 @@ public class JugadorProvisional {
     // Así cuando ya tengamos decididos los jugadores se crearan de verdad en la base de datos.
 
     private String nombre;
-    private Partida partida;
     private int color;
 
-    public JugadorProvisional(String nombre, Partida partida, int color) {
+    public JugadorProvisional(String nombre, int color) {
         this.nombre = nombre;
-        this.partida = partida;
         this.color = color;
     }
 
@@ -21,14 +21,6 @@ public class JugadorProvisional {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Partida getPartida() {
-        return partida;
-    }
-
-    public void setPartida(Partida partida) {
-        this.partida = partida;
     }
 
     public int getColor() {

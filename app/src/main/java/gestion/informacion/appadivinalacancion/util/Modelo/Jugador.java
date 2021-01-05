@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Struct;
+import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 
 
 public class Jugador {
@@ -30,7 +31,7 @@ public class Jugador {
      * @param helper
      * @throws Exception
      */
-    public Jugador(String nombre, Partida partida, String color, BBDD_Helper helper) throws Exception {
+    public Jugador(String nombre, Partida partida, String color, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -42,7 +43,7 @@ public class Jugador {
 
         long ex = db.insert(BBDD_Struct.TABLA_JUGADOR, null, values);
         if(ex == -1){
-            throw new Exception("Error creating player");
+            throw new AppException("Error creating player");
         }
         this.id = Math.toIntExact(ex);
         this.nombre = nombre;
@@ -59,7 +60,7 @@ public class Jugador {
      * @param helper
      * @throws Exception
      */
-    public Jugador(int id, BBDD_Helper helper) throws Exception {
+    public Jugador(int id, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] proy = {
                 BBDD_Struct.ID_JUGADOR,
@@ -77,7 +78,7 @@ public class Jugador {
             c.close();
         } else {
             c.close();
-            throw new Exception("Jugador con id " + id + " no encontrado");
+            throw new AppException("Jugador con id " + id + " no encontrado");
         }
     }
 
@@ -148,7 +149,7 @@ public class Jugador {
      * @param helper
      * @throws Exception
      */
-    public void eliminarJugador(BBDD_Helper helper) throws Exception {
+    public void eliminarJugador(BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         int e = db.delete(
@@ -158,7 +159,7 @@ public class Jugador {
         );
 
         if(e < 1){
-            throw new Exception("Error al eliminar");
+            throw new AppException("Error al eliminar");
         }
 
         this.id = -1;
@@ -193,7 +194,7 @@ public class Jugador {
         return puntos;
     }
 
-    public void setPuntos(int puntos, BBDD_Helper helper) throws Exception {
+    public void setPuntos(int puntos, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -207,7 +208,7 @@ public class Jugador {
         return acertadas;
     }
 
-    public void setAcertadas(int acertadas, BBDD_Helper helper) throws Exception {
+    public void setAcertadas(int acertadas, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -217,7 +218,7 @@ public class Jugador {
         this.acertadas = acertadas;
     }
 
-    private void actualizar(SQLiteDatabase db, ContentValues values) throws Exception {
+    private void actualizar(SQLiteDatabase db, ContentValues values) throws AppException {
         int count = db.update(
                 BBDD_Struct.TABLA_JUGADOR,
                 values,
@@ -225,7 +226,7 @@ public class Jugador {
                 new String[]{String.valueOf(this.id)});
 
         if (count == 0){
-            throw new Exception("Error al actualizar");
+            throw new AppException("Error al actualizar");
         }
     }
 }

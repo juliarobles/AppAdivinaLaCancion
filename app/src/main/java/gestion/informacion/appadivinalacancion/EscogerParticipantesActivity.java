@@ -19,9 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
-import gestion.informacion.appadivinalacancion.util.Modelo.JugadorProvisional;
+import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.ListaJugadoresAdapter;
+import gestion.informacion.appadivinalacancion.util.Otros.PartidaProvisional;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 import gestion.informacion.appadivinalacancion.util.Otros.Spotify;
 
@@ -34,7 +35,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
     private List<JugadorProvisional> jugadores;
     private int numParticipantes;
     private List<Integer> avatars;
-    private Partida partida;
+    private PartidaProvisional partidaProvisional;
     private BBDD_Helper helper;
 
     @Override
@@ -55,7 +56,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         jugadores = new ArrayList<>();
         numParticipantes = 0;
         inicializarAvatars();
-        partida = (Partida) SingletonMap.getInstancia().get("partida");
+        partidaProvisional = (PartidaProvisional) SingletonMap.getInstancia().get("partida");
 
         //Pongo un avatar aleatorio
         Collections.shuffle(avatars);
@@ -112,7 +113,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.falloNombreVacio, Toast.LENGTH_SHORT).show();
             } else {
                 //Creo jugador provisional y lo añado a la lista
-                jugadores.add(new JugadorProvisional(nombre, partida, avatars.get(numParticipantes)));
+                jugadores.add(new JugadorProvisional(nombre, avatars.get(numParticipantes)));
 
                 //Siguiente avatar
                 numParticipantes++;
@@ -133,16 +134,21 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         try {
             if(numParticipantes >= 1){
                 Map map = SingletonMap.getInstancia();
+
+                //Creo la partida de verdad
+                //Playlist playlist = new Playlist(RELLENA ESTO WANY)
+                Partida partidaDefinitiva = new Partida(partidaProvisional.getFecha(), partidaProvisional.getRondas(), null, helper); //SUSTITUYE null POR PLAYLIST
+
                 //Establezco los jugadores como definitivos (osea los guardo en la bd)
-                ((Partida)map.get("partida")).setJugadores(jugadores, helper);
+                partidaDefinitiva.setJugadores(jugadores, helper);
+
+                //Guardo la partida en nuestra información
+                map.replace("partida", partidaDefinitiva);
+
                 //Esta variable nos permitirá tener saber cuantas rondas hemos jugado
                 map.put("rondasJugadas", 0);
 
-                //WANY. No sé como va el tema spotify, pero aquí a los mejor habria que hacer una List<Cancion> con RONDAS canciones elegidas
-                //aleatoriamente de la playlist. Esa List<Cancion> la meteríamos en el SingletonMap y ya en cada ronda se reproduciría .get(rondasJugadas) de
-                //esa lista. No sé si se puede hacer así pero ahí está la idea.
-
-                String [] partes = partida.getPlaylist().toString().split("/");
+                String [] partes = partidaProvisional.getPlaylist().toString().split("/");
                 Spotify sp = new Spotify();
                 sp.getCancionesFromPlaylist(partes[partes.length-1]);
                 Toast.makeText(getApplicationContext(), partes[partes.length-1] + " id de la playlist", Toast.LENGTH_SHORT).show();

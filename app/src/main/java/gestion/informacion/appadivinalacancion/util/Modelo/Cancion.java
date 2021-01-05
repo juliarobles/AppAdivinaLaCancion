@@ -11,6 +11,7 @@ import java.util.List;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Struct;
+import gestion.informacion.appadivinalacancion.util.Otros.AppException;
 
 public class Cancion {
 
@@ -18,6 +19,7 @@ public class Cancion {
     private String nombre;
     private URL url;
     private String autor;
+    private URL imagen;
 
     //------------------------------------------------------------
     // Constructores
@@ -28,10 +30,11 @@ public class Cancion {
      * @param nombre
      * @param url
      * @param autor
+     * @param imagen
      * @param helper
      * @throws Exception
      */
-    public Cancion(String nombre, URL url, String autor, BBDD_Helper helper) throws Exception {
+    public Cancion(String nombre, URL url, String autor, URL imagen, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + BBDD_Struct.TABLA_CANCION + " WHERE " + BBDD_Struct.URL_CANCION + " = ?",
                 new String[]{url.toString()});
@@ -41,10 +44,11 @@ public class Cancion {
             values.put(BBDD_Struct.NOMBRE_CANCION, nombre);
             values.put(BBDD_Struct.URL_CANCION, url.toString());
             values.put(BBDD_Struct.AUTOR_CANCION, autor);
+            values.put(BBDD_Struct.IMAGEN_CANCION, imagen.toString());
 
             long ex = db.insert(BBDD_Struct.TABLA_CANCION, null, values);
             if(ex == -1) {
-                throw new Exception("Fallo al crear la partida");
+                throw new AppException("Fallo al crear la cancion");
             }
             this.id = Math.toIntExact(ex);
         } else {
@@ -53,9 +57,11 @@ public class Cancion {
                 this.id = Math.toIntExact(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_CANCION)));
             }
         }
+        c.close();
         this.nombre = nombre;
         this.url = url;
         this.autor = autor;
+        this.imagen = imagen;
     }
 
     //Este constructor es para sacar los datos de la bd
@@ -75,6 +81,7 @@ public class Cancion {
         this.autor = c.getString(c.getColumnIndexOrThrow(BBDD_Struct.AUTOR_CANCION));
         this.url = new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_CANCION)));
         this.nombre = c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_CANCION));
+        this.imagen = new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_CANCION)));
     }
 
     //------------------------------------------------------------
@@ -117,7 +124,7 @@ public class Cancion {
      * @throws Exception
      */
     /*Privado porque en principio no lo necesitamos*/
-    private void eliminarCancion(BBDD_Helper helper) throws Exception {
+    private void eliminarCancion(BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         eliminarPartidaCancion(db);
@@ -128,16 +135,17 @@ public class Cancion {
                 );
 
         if(e < 1){
-            throw new Exception("Error al eliminar");
+            throw new AppException("Error al eliminar");
         }
 
         this.id = -1;
         this.nombre = null;
         this.autor = null;
         this.url = null;
+        this.imagen = null;
     }
 
-    private void eliminarPartidaCancion(SQLiteDatabase db) throws Exception {
+    private void eliminarPartidaCancion(SQLiteDatabase db) throws AppException {
         int e = db.delete(
                 BBDD_Struct.TABLA_CANCIONPARTIDA,
                 BBDD_Struct.ID_CANCION_CANCIONPARTIDA + " = ?",
@@ -163,5 +171,9 @@ public class Cancion {
 
     public String getAutor() {
         return autor;
+    }
+
+    public URL getImagen() {
+        return imagen;
     }
 }

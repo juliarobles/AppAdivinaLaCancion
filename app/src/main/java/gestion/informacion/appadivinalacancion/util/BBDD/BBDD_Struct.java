@@ -10,19 +10,35 @@ public class BBDD_Struct {
     // CREACION DE TABLAS
     //-------------------------------------------------------------------------
 
+    //Crear tabla playlist
+    public static final String TABLA_PLAYLIST = "PLAYLIST";
+    public static final String ID_PLAYLIST = "ID";
+    public static final String URL_PLAYLIST = "URL";
+    public static final String NOMBRE_PLAYLIST = "NOMBRE";
+    public static final String IMAGEN_PLAYLIST = "IMAGEN";
+    public static final String PROPIETARIO_PLAYLIST = "PROPIETARIO";
+
+    protected static final String SQL_CREATE_PLAYLIST = "CREATE TABLE " + TABLA_PLAYLIST + " ("
+            + ID_PLAYLIST + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + NOMBRE_PLAYLIST + " TEXT NOT NULL,"
+            + URL_PLAYLIST + " TEXT NOT NULL UNIQUE,"
+            + IMAGEN_PLAYLIST + " TEXT NOT NULL,"
+            + PROPIETARIO_PLAYLIST + " TEXT NOT NULL)";
+
     //Crear tabla partida
     public static final String TABLA_PARTIDA = "PARTIDA";
     public static final String ID_PARTIDA = "ID";
-    public static final String PLAYLIST_PARTIDA = "PLAYLIST";
+    public static final String ID_PLAYLIST_PARTIDA = "PLAYLIST";
     public static final String GANADOR_PARTIDA = "GANADOR";
     public static final String FECHA_PARTIDA = "FECHA";
     public static final String RONDAS_PARTIDA = "RONDAS";
 
     protected static final String SQL_CREATE_PARTIDA = "CREATE TABLE " + TABLA_PARTIDA + " ("
             + ID_PARTIDA + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + PLAYLIST_PARTIDA + " TEXT NOT NULL,"
+            + ID_PLAYLIST_PARTIDA + " INTEGER NOT NULL,"
             + FECHA_PARTIDA + " DATE,"
-            + RONDAS_PARTIDA + " INTEGER NOT NULL"
+            + RONDAS_PARTIDA + " INTEGER NOT NULL,"
+            + "FOREIGN KEY(" + ID_PLAYLIST_PARTIDA + ") REFERENCES " + TABLA_PLAYLIST + "(" + ID_PLAYLIST + ")"
             + ")";
 
     //Crear tabla jugador
@@ -50,11 +66,13 @@ public class BBDD_Struct {
     public static final String NOMBRE_CANCION = "NOMBRE";
     public static final String URL_CANCION = "URL";
     public static final String AUTOR_CANCION = "AUTOR";
+    public static final String IMAGEN_CANCION = "IMAGEN";
 
     protected static final String SQL_CREATE_CANCION = "CREATE TABLE " + TABLA_CANCION + " ("
             + ID_CANCION + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + NOMBRE_CANCION + " TEXT NOT NULL,"
             + URL_CANCION + " TEXT NOT NULL UNIQUE,"
+            + IMAGEN_CANCION + " TEXT NOT NULL,"
             + AUTOR_CANCION + " TEXT NOT NULL)";
 
     //Crear tabla cancionPartida

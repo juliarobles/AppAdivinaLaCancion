@@ -13,13 +13,15 @@ import java.util.List;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Struct;
+import gestion.informacion.appadivinalacancion.util.Otros.AppException;
+import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 
 public class Partida {
     private int id;
     private Jugador ganador;
     private Date fecha;
     private int rondas;
-    private URL playlist;
+    private Playlist playlist;
     private List<Jugador> jugadores;
     private List<Cancion> canciones;
 
@@ -35,17 +37,17 @@ public class Partida {
      * @param helper
      * @throws Exception
      */
-    public Partida(Date fecha, int rondas, URL playlist, BBDD_Helper helper) throws Exception {
+    public Partida(Date fecha, int rondas, Playlist playlist, BBDD_Helper helper) throws AppException {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(BBDD_Struct.FECHA_PARTIDA, fecha.toString());
-        values.put(BBDD_Struct.PLAYLIST_PARTIDA, playlist.toString());
+        values.put(BBDD_Struct.ID_PLAYLIST_PARTIDA, playlist.getId());
         values.put(BBDD_Struct.RONDAS_PARTIDA, rondas);
 
         long ex = db.insert(BBDD_Struct.TABLA_PARTIDA, null, values);
         if(ex == -1) {
-            throw new Exception("Fallo al crear la partida");
+            throw new AppException("Fallo al crear la partida");
         }
         this.id = Math.toIntExact(ex);
         this.fecha = fecha;
@@ -59,11 +61,11 @@ public class Partida {
      * @param helper
      * @throws Exception
      */
-    public Partida (int id, BBDD_Helper helper) throws Exception {
+    public Partida (int id, BBDD_Helper helper) throws AppException, MalformedURLException, ParseException {
         SQLiteDatabase db = helper.getReadableDatabase();
         String[] proy = {
                 BBDD_Struct.ID_PARTIDA,
-                BBDD_Struct.PLAYLIST_PARTIDA,
+                BBDD_Struct.ID_PLAYLIST_PARTIDA,
                 BBDD_Struct.FECHA_PARTIDA,
                 BBDD_Struct.RONDAS_PARTIDA,
                 BBDD_Struct.GANADOR_PARTIDA
@@ -78,7 +80,7 @@ public class Partida {
             c.close();
         } else {
             c.close();
-            throw new Exception("Partida con id " + id + " no encontrada");
+            throw new AppException("Partida con id " + id + " no encontrada");
         }
     }
 
@@ -99,7 +101,7 @@ public class Partida {
      * @throws MalformedURLException
      * @throws ParseException
      */
-    private Partida(Cursor c, BBDD_Helper helper) throws MalformedURLException, ParseException {
+    private Partida(Cursor c, BBDD_Helper helper) throws AppException, MalformedURLException, ParseException {
         try{
             this.ganador = new Jugador(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.GANADOR_PARTIDA)), helper);
         } catch (Exception e){
@@ -108,7 +110,7 @@ public class Partida {
         this.id = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_PARTIDA));
         this.fecha = BBDD_Struct.formatoFecha.parse(c.getString(c.getColumnIndex(BBDD_Struct.FECHA_PARTIDA)));
         this.rondas = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.RONDAS_PARTIDA));
-        this.playlist = new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.PLAYLIST_PARTIDA)));
+        this.playlist = new Playlist(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_PLAYLIST_PARTIDA)), helper);
         this.jugadores = null;
         this.canciones = null;
     }
@@ -125,7 +127,7 @@ public class Partida {
      * @throws MalformedURLException (Playlist)
      * @throws ParseException (Fecha)
      */
-    public static List<Partida> todasPartidasSimples(BBDD_Helper helper) throws MalformedURLException, ParseException {
+    public static List<Partida> todasPartidasSimples(BBDD_Helper helper) throws Exception {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + BBDD_Struct.TABLA_PARTIDA + " ORDER BY " + BBDD_Struct.FECHA_PARTIDA + " DESC", null);
 
@@ -212,7 +214,7 @@ public class Partida {
         return rondas;
     }
 
-    public URL getPlaylist() {
+    public Playlist getPlaylist() {
         return playlist;
     }
 
@@ -243,7 +245,7 @@ public class Partida {
     public void setJugadores(List<JugadorProvisional> jugadores, BBDD_Helper helper) throws Exception {
         List<Jugador> list = new ArrayList<>();
         for (JugadorProvisional jugador : jugadores){
-            list.add(new Jugador(jugador.getNombre(), jugador.getPartida(), String.valueOf(jugador.getColor()), helper));
+            list.add(new Jugador(jugador.getNombre(), this, String.valueOf(jugador.getColor()), helper));
         }
         this.jugadores = list;
     }

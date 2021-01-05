@@ -20,9 +20,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
 import gestion.informacion.appadivinalacancion.util.Otros.ListaPlaylistAdapter;
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
+import gestion.informacion.appadivinalacancion.util.Otros.PartidaProvisional;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
 import gestion.informacion.appadivinalacancion.util.Otros.Tupla;
 
@@ -170,7 +172,7 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
                     URL url = new URL(valorURL);
 
                     //Creamos la partida
-                    Partida partida = new Partida(new Date(), rondas, url, helper);
+                    PartidaProvisional partida = new PartidaProvisional(new Date(), rondas, url);
                     SingletonMap.getInstancia().put("partida", partida);
 
                     //Pasamos a la siguiente pantalla

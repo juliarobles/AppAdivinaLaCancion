@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import gestion.informacion.appadivinalacancion.R;
-import gestion.informacion.appadivinalacancion.util.Modelo.JugadorProvisional;
 
 public class ListaJugadoresAdapter extends RecyclerView.Adapter<ListaJugadoresAdapter.MyViewHolder> implements View.OnClickListener {
     private List<JugadorProvisional> jugadores;
