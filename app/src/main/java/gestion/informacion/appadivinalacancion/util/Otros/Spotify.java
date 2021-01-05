@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
 import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
+import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
 
 public  class Spotify {
 
@@ -146,6 +147,32 @@ public  class Spotify {
 
         }
         return sb.toString();
+    }
+
+    public Playlist getPlaylistFromUrl(String parte) {
+        SpotifyTask task = new SpotifyTask();
+        String url = 	"https://api.spotify.com/v1/playlists/"+parte;
+        Object[] obj ={"busqueda", "GET", url};
+        Object res = null;
+        Playlist pl = null;
+        try{
+            res = task.execute(obj).get();
+            JSONObject respuesta = (JSONObject)res;
+            pl = new Playlist(new URL(url), new URL(respuesta.getJSONArray("images").getJSONObject(0).getString("url")),
+                        respuesta.getString("owner"), respuesta.getString("name"), helper );
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (AppException e) {
+            e.printStackTrace();
+        }
+
+        return pl;
     }
 
     public class SpotifyTask extends AsyncTask{
