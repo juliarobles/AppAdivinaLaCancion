@@ -19,25 +19,54 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AQUI VA TODA LA INFO DE LA CANCION ES TARDE ASI QUE LO HAGO MAÑANA, PERO TE HACES A LA IDEA" />
+            android:text="@string/label_verResultado"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/imagenCancion"
-            android:layout_width="178dp"
-            android:layout_height="169dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
             app:srcCompat="@drawable/ic_disco_de_vinilo_naranja" />
+
+        <TextView
+            android:id="@+id/textNombreCancion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/amarillito"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/text_autorCancion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/labelQuienHaAcertado"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/ganador"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btn_siguienteRonda"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
             android:onClick="respuestaSiguienteRonda"
-            android:text="CONTINUAR" />
+            android:text="@string/button_siguienteRonda" />
 
     </LinearLayout>
 

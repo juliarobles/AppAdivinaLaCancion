@@ -36,4 +36,7 @@
     <string name="labelTiempo">Segundos escuchados:</string>
     <string name="avisoFinTiempo">¡Se acabo el tiempo!</string>
     <string name="button_verResultado">Ver resultado</string>
+    <string name="label_verResultado">La respuesta correcta es...</string>
+    <string name="button_siguienteRonda">Siguiente ronda</string>
+    <string name="labelQuienHaAcertado">¿Quien lo ha adivinado más rápido?</string>
 </resources>

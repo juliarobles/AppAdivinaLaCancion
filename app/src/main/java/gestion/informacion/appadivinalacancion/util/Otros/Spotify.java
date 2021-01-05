@@ -145,7 +145,7 @@ public  class Spotify {
                 if(cont != artists.length()-1){
                     sb.append(", ");
                 }else{
-                    sb.append(".");
+                    sb.append("");
                 }
 
             } catch (JSONException e) {
