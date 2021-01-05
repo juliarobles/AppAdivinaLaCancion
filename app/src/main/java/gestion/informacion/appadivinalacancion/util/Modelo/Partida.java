@@ -215,6 +215,10 @@ public class Partida {
         return rondas;
     }
 
+    public void setRondas(int rondas){
+        this.rondas = rondas;
+    }
+
     public Playlist getPlaylist() {
         return playlist;
     }

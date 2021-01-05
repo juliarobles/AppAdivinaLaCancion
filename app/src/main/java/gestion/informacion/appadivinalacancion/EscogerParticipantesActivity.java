@@ -149,10 +149,10 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 map.put("rondasJugadas", 0);
 
                 //Creamos la lista de canciones que va a sonar
-                String [] partes = partidaProvisional.getPlaylist().toString().split("/");
+                String [] partes = partidaProvisional.getPlaylist().toString().split("/|\\?");
                 Spotify sp = new Spotify(this.helper);
-                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[partes.length-1], partidaProvisional.getRondas()));
-                Toast.makeText(getApplicationContext(), partes[partes.length-1] + " id de la playlist", Toast.LENGTH_SHORT).show();
+                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(partes[4], partidaProvisional.getRondas()));
+                map.replace("partida", partidaDefinitiva);
 
                 //Comienzo el juego
                 Intent intent = new Intent(this, JugarRondaSonarActivity.class);

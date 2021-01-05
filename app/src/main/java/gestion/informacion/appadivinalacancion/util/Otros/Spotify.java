@@ -50,9 +50,33 @@ public  class Spotify {
         System.out.println("Token actualizado " + this.token );
     }
 
+    public String getPreviewCancion(String url){
+        SpotifyTask task = new SpotifyTask();
+        Object[] obj ={"busqueda", "GET", url};
+        Object res = null;
+        try {
+            res = task.execute(obj).get();
+            JSONObject respuesta = (JSONObject) res;
+            Cancion c = new Cancion(respuesta.getString("name"),
+                    new URL("https://api.spotify.com/v1/tracks/" + respuesta.getString("id")),
+                    stringArtistas(respuesta.getJSONArray("artists")), null, this.helper);
+            return respuesta.getString("preview_url");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (AppException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public List<Cancion> getCancionesFromPlaylist(String id, int numero){
         SpotifyTask task = new SpotifyTask();
-
+        List<Cancion> listaCanciones = new LinkedList<>();
         String url = 	"https://api.spotify.com/v1/playlists/"+id+"/tracks";
 
         Object[] obj  = {"busqueda", "GET", url};
@@ -65,26 +89,27 @@ public  class Spotify {
                 System.out.println("LISTA CANCIONES: " );
                 JSONObject aux;
                 List<Integer> usados = new LinkedList<>();
-                List<Cancion> listaCanciones = new LinkedList<>();
                 int cont = 0;
                 Random r = new Random();
+                //Comprobar que la preview no es nula
                 while(cont < numero){
                     int random = r.nextInt(respuesta.getJSONArray("items").length());
                     if(!usados.contains(random)) {
-                        aux = respuesta.getJSONArray("items").getJSONObject(cont).getJSONObject("track");
+                        aux = respuesta.getJSONArray("items").getJSONObject(random).getJSONObject("track");
                         System.out.println("Canción número " + cont + ": " + aux);
                         Cancion c = new Cancion(aux.getString("name"),
                                 new URL("https://api.spotify.com/v1/tracks/" + aux.getString("id")),
                                 stringArtistas(aux.getJSONArray("artists")), null, this.helper);
                         cont++;
                         usados.add(random);
+                        listaCanciones.add(c);
                     }
                 }
             }else{
                 System.out.println("ERROR AL EJECUTAR LA OPERACIÓN");
                 System.out.println(res);
             }
-
+            return listaCanciones;
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
