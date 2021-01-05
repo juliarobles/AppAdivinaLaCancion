@@ -161,7 +161,7 @@ public class Partida {
                 list.add(new Tupla(
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
-                        new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST))),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.PROPIETARIO_PLAYLIST))
                 ));
                 c.moveToNext();
@@ -187,7 +187,7 @@ public class Partida {
                 list.add(new Tupla(
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.NOMBRE_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.URL_PLAYLIST)),
-                        new URL(c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST))),
+                        c.getString(c.getColumnIndexOrThrow(BBDD_Struct.IMAGEN_PLAYLIST)),
                         c.getString(c.getColumnIndexOrThrow(BBDD_Struct.PROPIETARIO_PLAYLIST))
                 ));
                 c.moveToNext();

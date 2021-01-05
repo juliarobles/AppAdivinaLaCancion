@@ -195,10 +195,10 @@ public class EscogerPlaylistActivity extends AppCompatActivity {
         } else {
             playlists.clear();
         }
-        playlists.add(new Tupla("El Top 50 Global", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF", null, "spotifycharts"));
-        playlists.add(new Tupla("El Top 50 de España", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9",null, "spotifycharts"));
-        playlists.add(new Tupla("Los 50 más virales global", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9", null, "spotifycharts"));
-        playlists.add(new Tupla("Los 50 más virales de España", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj", null, "spotifycharts"));
+        playlists.add(new Tupla("Global Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF", "https://charts-images.scdn.co/assets/locale_en/regional/daily/region_es_large.jpg", "spotifycharts"));
+        playlists.add(new Tupla("Spain Top 50", "https://open.spotify.com/playlist/37i9dQZEVXbNFJfN1Vw8d9","https://charts-images.scdn.co/assets/locale_en/regional/daily/region_global_large.jpg", "spotifycharts"));
+        playlists.add(new Tupla("Global Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbLiRSasKsNU9", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_global_large.jpg", "spotifycharts"));
+        playlists.add(new Tupla("Spain Viral 50", "https://open.spotify.com/playlist/37i9dQZEVXbMfVLvbaC3bj", "https://charts-images.scdn.co/assets/locale_en/viral/daily/region_es_large.jpg", "spotifycharts"));
     }
 
     public void respuestaEscogerPlaylist(android.view.View v){

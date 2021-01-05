@@ -5,10 +5,10 @@ import java.net.URL;
 public class Tupla {
     private String x1; //titulo
     private String x2; //url
-    private URL imagen;
+    private String imagen;
     private String prop;
 
-    public Tupla(String x1, String x2, URL url, String prop) {
+    public Tupla(String x1, String x2, String url, String prop) {
         this.x1 = x1;
         this.x2 = x2;
         this.imagen = url;
@@ -31,11 +31,11 @@ public class Tupla {
         this.x2 = x2;
     }
 
-    public URL getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(URL imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +69,7 @@ public class ListaPlaylistAdapter extends RecyclerView.Adapter<ListaPlaylistAdap
         Tupla t = datos.get(position);
         holder.nombre.setText(t.getX1());
         holder.propietario.setText(t.getProp());
-        //holder.imagen.
+        Picasso.get().load(t.getImagen()).into(holder.imagen);
 
     }
 
