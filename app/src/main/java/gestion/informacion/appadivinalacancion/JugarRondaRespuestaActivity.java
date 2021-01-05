@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
 import gestion.informacion.appadivinalacancion.util.Otros.SingletonMap;
@@ -42,6 +41,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
         //Cargamos la lista de jugadores en el Spinner de ganadores
         List<String> jugadores = new LinkedList<>();
+        jugadores.add("Nadie ha acertado");
         for(Jugador j: partida.getJugadores()){
             jugadores.add(j.getNombre());
         }
@@ -50,7 +50,11 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
                 jugadores);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ganador.setAdapter(adapter);
-        
+        ganador.setSelection(adapter.getPosition("Nadie ha acertado"));
+
+        //Cargamos la imagen de la canción
+        imagenCancion = findViewById(R.id.imagenCancion);
+
      }
 
     public void respuestaSiguienteRonda(android.view.View v){
@@ -58,6 +62,8 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
         //AQUI SE DEBERIAN SUMAR LOS PUNTOS QUE SEA AL JUGADOR QUE SEA O A NADIE
 
         Map info = SingletonMap.getInstancia();
+        long puntos = (long)info.get("puntos");
+        Partida partida = (Partida) info.get("partida");
 
 
         if((int)info.get("rondasJugadas") < ((Partida)info.get("partida")).getRondas()){
