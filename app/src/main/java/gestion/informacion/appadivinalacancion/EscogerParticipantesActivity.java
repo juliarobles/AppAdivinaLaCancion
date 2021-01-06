@@ -164,7 +164,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
 
                 //Creamos la lista de canciones que va a sonar
 
-                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(id, partidaProvisional.getRondas()));
+                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(id, partidaProvisional.getRondas()),helper);
                 map.replace("partida", partidaDefinitiva);
 
                 //Comienzo el juego

@@ -264,7 +264,13 @@ public class Partida {
         return rondas;
     }
 
-    public void setRondas(int rondas){
+    public void setRondas(int rondas, BBDD_Helper helper) throws Exception {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(BBDD_Struct.RONDAS_PARTIDA, rondas);
+        actualizar(db, values);
+
         this.rondas = rondas;
     }
 
@@ -325,11 +331,24 @@ public class Partida {
         return canciones;
     }
 
-    /* No hace falta porque al crear la cancion ya se asigna a la partida
+    /*
     public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
     }*/
-    public void setCanciones(List<Cancion> canciones) {
+    
+    public void setCanciones(List<Cancion> canciones, BBDD_Helper helper) throws AppException {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        for(Cancion c : canciones){
+            ContentValues values = new ContentValues();
+            values.put(BBDD_Struct.ID_CANCION_CANCIONPARTIDA, c.getId());
+            values.put(BBDD_Struct.ID_PARTIDA_CANCIONPARTIDA, this.id);
+            long ex = db.insert(BBDD_Struct.TABLA_CANCIONPARTIDA, null, values);
+            if(ex == -1) {
+                throw new AppException("Fallo al relacionar la cancion con la partida");
+            }
+        }
+
         this.canciones = canciones;
     }
 
