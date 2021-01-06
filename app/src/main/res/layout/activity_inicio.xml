@@ -17,7 +17,8 @@
             android:id="@+id/imageView"
             android:layout_width="219dp"
             android:layout_height="206dp"
-            app:srcCompat="@drawable/logo4" />
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/ic_logo_guessthesong" />
 
         <Button
             android:id="@+id/btn_jugar"
@@ -35,8 +36,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:fontFamily="sans-serif-light"
-            android:text="@string/button_instrucciones"
-            android:textColor="@color/black" />
+            android:text="@string/button_instrucciones" />
 
         <Button
             android:id="@+id/btn_historial"
@@ -44,8 +44,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:fontFamily="sans-serif-light"
-            android:text="@string/button_historial"
-            android:textColor="@color/black" />
+            android:text="@string/button_historial" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

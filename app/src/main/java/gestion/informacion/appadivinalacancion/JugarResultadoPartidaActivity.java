@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -21,30 +22,46 @@ public class JugarResultadoPartidaActivity extends AppCompatActivity {
     private BBDD_Helper helper;
     private RecyclerView recyclerResultados;
     private TextView textResultados;
+    private List<Jugador> jugadores;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugar_resultado_partida);
+        getSupportActionBar().hide();
 
         //Inicializamos los elementos de la vista
         recyclerResultados =(RecyclerView) findViewById(R.id.resultados);
-        //Hay que meterle el mensaje
-        textResultados = (TextView) findViewById(R.id.textResultados);
         //Creamos el helper de la BBDD
         helper = new BBDD_Helper(this);
 
         //Cargamos los jugadores
         Map info = SingletonMap.getInstancia();
         Partida partida =(Partida) info.get("partida");
-        List<Jugador> jugadores = partida.getJugadoresSortByPuntos(partida, helper);
+        jugadores = partida.getJugadoresSortByPuntos(partida, helper);
         System.out.println(jugadores.size() + " NUMERO DE JUGADORES");
-        PuntosAdapter adapter = new PuntosAdapter(jugadores);
+        PuntosAdapter adapter = new PuntosAdapter(jugadores, getString(R.string.label_puntos), getString(R.string.label_acertadas));
         recyclerResultados.setHasFixedSize(true);
         recyclerResultados.setLayoutManager(new LinearLayoutManager((this)));
         recyclerResultados.setAdapter(adapter);
+    }
 
-        //Establecemos los textos
-        //Cambiar esto
-        textResultados.setText("Resultados");
+    public void respuestaAcabarPartida(android.view.View v){
+        Map info = SingletonMap.getInstancia();
+        Partida partida =(Partida) info.get("partida");
+        try {
+            partida.setGanador(jugadores.get(0), helper);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        info.remove("partida");
+        info.remove("rondasJugadas");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

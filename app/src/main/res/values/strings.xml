@@ -41,4 +41,8 @@
     <string name="labelQuienHaAcertado">¿Quien lo ha adivinado más rápido?</string>
     <string name="labelPuntosActuales">Puntos actuales: </string>
     <string name="nadieLaHaAcertado">Nadie la ha acertado</string>
+    <string name="labelResultadosFinales">RESULTADOS FINALES</string>
+    <string name="buttonFinalizarPartida">Finalizar partida</string>
+    <string name="label_puntos">Puntos:</string>
+    <string name="label_acertadas">Acertadas:</string>
 </resources>

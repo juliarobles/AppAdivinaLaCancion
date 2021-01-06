@@ -140,4 +140,8 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }

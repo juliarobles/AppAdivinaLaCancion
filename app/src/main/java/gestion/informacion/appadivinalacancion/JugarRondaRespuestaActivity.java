@@ -79,6 +79,7 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
             System.out.println(j.getPuntos() + "PUNTOS DEL JUGADOR " + j.getNombre());
             try {
                 j.setPuntos(((int)(j.getPuntos()+ ((35000 - puntos)/1000))), helper);
+                j.setAcertadas(j.getAcertadas() + 1, helper);
             } catch (AppException e) {
                 e.printStackTrace();
             }
@@ -91,5 +92,10 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
             Intent intent = new Intent(this, JugarResultadoPartidaActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

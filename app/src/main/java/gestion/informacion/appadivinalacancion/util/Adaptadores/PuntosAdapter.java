@@ -17,12 +17,13 @@ import gestion.informacion.appadivinalacancion.util.Modelo.Jugador;
 
 public class PuntosAdapter extends RecyclerView.Adapter<PuntosAdapter.MyViewHolder> {
     private List<Jugador> mDataset;
+    private String textPuntos, textAcertadas;
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.jugadores_resultado_item, parent, false);
+                .inflate(R.layout.item_jugadores_resultado, parent, false);
         return new PuntosAdapter.MyViewHolder(v);
     }
 
@@ -31,17 +32,18 @@ public class PuntosAdapter extends RecyclerView.Adapter<PuntosAdapter.MyViewHold
         Jugador j = this.mDataset.get(position);
         holder.icono.setImageResource(Integer.parseInt(j.getColor()));
         holder.nombre.setText(j.getNombre());
-
-        holder.puntos.setText(j.getPuntos() + "");
+        holder.acertadas.setText(textAcertadas + " " + j.getAcertadas());
+        holder.puntos.setText(textPuntos + " " + j.getPuntos() + "");
     }
 
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
-    public PuntosAdapter(List<Jugador> datos ){
+    public PuntosAdapter(List<Jugador> datos, String textPuntos, String textAcertadas){
         this.mDataset = datos;
-        System.out.println("DNUMERO DE ELEMENTOS EN A LISTA:" + this.getItemCount());
+        this.textPuntos = textPuntos;
+        this.textAcertadas = textAcertadas;
     }
 
     // Provide a reference to the views for each data item
@@ -49,13 +51,14 @@ public class PuntosAdapter extends RecyclerView.Adapter<PuntosAdapter.MyViewHold
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView puntos, nombre;
+        public TextView puntos, nombre, acertadas;
         public ImageView icono;
         public MyViewHolder(View v) {
             super(v);
             puntos = v.findViewById(R.id.puntosJugadorResultado);
             nombre = v.findViewById(R.id.nombreJugadorResultado);
             icono = v.findViewById(R.id.iconoJugador);
+            acertadas = v.findViewById(R.id.textAcertadas);
         }
     }
 
