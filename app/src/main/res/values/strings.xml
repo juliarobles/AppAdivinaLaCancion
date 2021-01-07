@@ -45,4 +45,39 @@
     <string name="label_acertadas">Correct songs:</string>
     <string name="label_numeroRondas">Number of rounds:</string>
     <string name="label_jugadorGanador">Winner:</string>
+    <string name="title_instrucciones">Instructions</string>
+    <string name="configuracion">Configuration</string>
+    <string name="juego">Game</string>
+    <string name="title_configuracion">Configuration</string>
+    <string name="seleccion_playlist">
+<b>Playlist selection:</b> <br/>
+We have to introduce the link of a Spotify playlist (it is only compatible with Spotify). Then we will select the game duration (number of rounds).
+
+We also have the option to pick common playlists, playlists that we have played before or our favorite playlists (most played). The game will automatically
+introduce the link of the playlist when we press on it. <hr/>
+        </string>
+    <string name="seleccion_jugadores">
+           <b> Game players:</b>
+
+Here we can add players to the game. As easy as introducing the players name, pressing on "Add player" and thats all. When everybody is in the game we will
+press "Play" and the game will start.</string>
+    <string name="adivina">
+<b>Guess the song:</b>
+Each round, the game will select one random song from the playlist. The song will start playing after we press "Play", the timer will start counting too!
+As soon as a player knows the answer, we will have to stop the song and watch the result. We can pause and play the song as much as we want until a maximum
+of 30 seconds.
+    </string>
+    <string name="ver_resultado">
+<b>Watch the result:</b>
+Here we can see the information of the song that was playing and check if someone has guessed the answer. We will have to select the player who guessed the song
+(if there is any) and the game will give his/her points. The faster you reply, more points you get!
+    </string>
+    <string name="fin_partida">
+
+<b>The end of the game:</b>
+
+After we reach the established number of rounds (or the playlist runs out of songs) the game will end and it will show us the players with his/her points and right
+answers.
+    </string>
+
 </resources>

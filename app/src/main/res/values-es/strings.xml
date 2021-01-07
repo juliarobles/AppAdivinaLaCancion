@@ -46,4 +46,53 @@
     <string name="title_historial">Historial de partidas</string>
     <string name="label_numeroRondas">Número de rondas:</string>
     <string name="label_jugadorGanador">Jugador ganador:</string>
+    <string name="title_instrucciones">Instrucciones</string>
+    <string name="configuracion">Configuración</string>
+    <string name="juego">Juego</string>
+    <string name="title_configuracion">Configuración</string>
+    <string name="seleccion_playlist">
+
+    <b>Selección de playlist:</b> <br/>
+
+        En este apartado tendremos que introducir el enlace de una playlist de Spotify (solo es compatible con Spotify).
+        Después seleccionaremos la duración de la partida (número de rondas).<br/>
+
+        También tenemos la opción de coger playlists comunes, playlists que hayamos usado anteriormente o las playlists más usadas
+        por nosotros. Al seleccionarla se introducirá automáticamente la URL en el apartado correspondiente.
+
+
+
+    </string>
+    <string name="seleccion_jugadores">
+                   <b>Selección de participantes: </b><br/>
+
+        En este apartado podemos añadir a los participantes de la partida.
+        Tan fácil como introducir su nombre y darle a "Añadir participante"
+        y ya estaría. Cuando estén todos los participantes añadidos pulsaremos sobre "¡A jugar!" y empezaremos a jugar.
+        </string>
+
+    <string name="adivina">
+        <b>Adivina la canción:</b>
+
+Cada ronda el juego escogerá una canción aleatoria de la playlist.
+Para escucharla pulsaremos sobre "Reproducir", comenzará a sonar la canción ¡y el cronómetro también!.
+En cuanto un jugador lo sepa tendremos que parar la canción y ver el resultado. Podremos parar y reproducir la
+música cuanto queramos hasta llegar a un máximo de 30 segundos.
+    </string>
+    <string name="ver_resultado">
+
+   <b>Ver resultado:</b>
+
+Aquí podemos ver la información sobre la canción que estaba sonando y comprobar si se ha acertado o no.
+Escogeremos al jugador que ha
+acertado (si es que alguno lo ha hecho) y el juego le dará sus puntos ¡Cuanto más rápido respondáis,
+más puntos obtendréis!
+    </string>
+    <string name="fin_partida">
+
+<b>Fin de la partida:</b>
+Cuando lleguemos al número de rondas establecido (o no queden más canciones en la playlist) el juego terminará y
+nos mostrará a los
+jugadores con sus respectivos puntos y canciones acertadas.
+    </string>
 </resources>

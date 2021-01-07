@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:fontFamily="sans-serif-light"
+            android:onClick="respuestaInstrucciones"
             android:text="@string/button_instrucciones" />
 
         <Button
