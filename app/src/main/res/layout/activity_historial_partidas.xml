@@ -20,7 +20,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-condensed-light"
-            android:text="@string/title_historial"
+            android:text="@string/button_historial"
             android:textColor="@color/amarillito"
             android:textSize="24sp" />
 
