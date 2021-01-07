@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void respuestaHistorial(android.view.View v){
+        Intent intent = new Intent(this, HistorialPartidasActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onBackPressed() {
 

@@ -3,6 +3,7 @@ package gestion.informacion.appadivinalacancion.util.Modelo;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.SystemClock;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -42,7 +43,7 @@ public class Partida {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(BBDD_Struct.FECHA_PARTIDA, fecha.toString());
+        values.put(BBDD_Struct.FECHA_PARTIDA, BBDD_Struct.formatoFecha.format(fecha));
         values.put(BBDD_Struct.ID_PLAYLIST_PARTIDA, playlist.getId());
         values.put(BBDD_Struct.RONDAS_PARTIDA, rondas);
 
@@ -105,11 +106,13 @@ public class Partida {
     private Partida(Cursor c, BBDD_Helper helper) throws AppException, MalformedURLException, ParseException {
         try{
             this.ganador = new Jugador(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.GANADOR_PARTIDA)), helper);
-        } catch (Exception e){
+        } catch (AppException e){
             this.ganador = null;
         }
         this.id = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_PARTIDA));
         this.fecha = BBDD_Struct.formatoFecha.parse(c.getString(c.getColumnIndex(BBDD_Struct.FECHA_PARTIDA)));
+        System.out.println(c.getString(c.getColumnIndex(BBDD_Struct.FECHA_PARTIDA)));
+        System.out.println(this.fecha.toString());
         this.rondas = c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.RONDAS_PARTIDA));
         this.playlist = new Playlist(c.getInt(c.getColumnIndexOrThrow(BBDD_Struct.ID_PLAYLIST_PARTIDA)), helper);
         this.jugadores = null;
@@ -128,7 +131,7 @@ public class Partida {
      * @throws MalformedURLException (Playlist)
      * @throws ParseException (Fecha)
      */
-    public static List<Partida> todasPartidasSimples(BBDD_Helper helper) throws Exception {
+    public static List<Partida> todasPartidasSimples(BBDD_Helper helper) throws ParseException, AppException, MalformedURLException {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + BBDD_Struct.TABLA_PARTIDA + " ORDER BY " + BBDD_Struct.FECHA_PARTIDA + " DESC", null);
 

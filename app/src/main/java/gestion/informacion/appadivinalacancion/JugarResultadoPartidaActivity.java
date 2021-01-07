@@ -23,6 +23,7 @@ public class JugarResultadoPartidaActivity extends AppCompatActivity {
     private RecyclerView recyclerResultados;
     private TextView textResultados;
     private List<Jugador> jugadores;
+    private boolean volverAtras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,29 @@ public class JugarResultadoPartidaActivity extends AppCompatActivity {
 
         //Inicializamos los elementos de la vista
         recyclerResultados =(RecyclerView) findViewById(R.id.resultados);
+
         //Creamos el helper de la BBDD
         helper = new BBDD_Helper(this);
+        volverAtras = false;
 
         //Cargamos los jugadores
         Map info = SingletonMap.getInstancia();
         Partida partida =(Partida) info.get("partida");
         jugadores = partida.getJugadoresSortByPuntos(partida, helper);
-        System.out.println(jugadores.size() + " NUMERO DE JUGADORES");
+        try {
+            partida.setGanador(jugadores.get(0), helper);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(info.containsKey("volverAtras")){
+            if((boolean)info.get("volverAtras")){
+                volverAtras = true;
+            }
+            info.remove("volverAtras");
+        }
+
+        info.remove("partida");
+        info.remove("rondasJugadas");
         PuntosAdapter adapter = new PuntosAdapter(jugadores, getString(R.string.label_puntos), getString(R.string.label_acertadas));
         recyclerResultados.setHasFixedSize(true);
         recyclerResultados.setLayoutManager(new LinearLayoutManager((this)));
@@ -47,21 +63,14 @@ public class JugarResultadoPartidaActivity extends AppCompatActivity {
     }
 
     public void respuestaAcabarPartida(android.view.View v){
-        Map info = SingletonMap.getInstancia();
-        Partida partida =(Partida) info.get("partida");
-        try {
-            partida.setGanador(jugadores.get(0), helper);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        info.remove("partida");
-        info.remove("rondasJugadas");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-
+        if(volverAtras){
+            super.onBackPressed();
+        }
     }
 }
