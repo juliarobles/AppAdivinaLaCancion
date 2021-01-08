@@ -48,7 +48,7 @@ public  class Spotify {
         if(t != null && t instanceof String){
             token = (String) t;
         }
-        System.out.println("Token actualizado " + this.token );
+
     }
 
     public String getPreviewCancion(String url){
@@ -87,8 +87,6 @@ public  class Spotify {
             res = task.execute(obj).get();
             if(res != null && res instanceof JSONObject){
                 JSONObject respuesta = (JSONObject)res;
-                System.out.println("BUSQUEDA FINALIZADA");
-                System.out.println("LISTA CANCIONES: " );
                 JSONObject aux;
                 List<Integer> usados = new LinkedList<>();
                 int cont = 0;
@@ -98,10 +96,7 @@ public  class Spotify {
                     int random = r.nextInt(respuesta.getJSONArray("items").length());
                     aux = respuesta.getJSONArray("items").getJSONObject(random).getJSONObject("track");
                     if(!usados.contains(random)  ) {
-                        System.out.println("PREVIEW URL: " +  aux.getString("preview_url"));
                         if(!aux.getString("preview_url").equals( "null")){
-                            System.out.println("Canción número " + cont + ": " + aux);
-                            System.out.println("IMAGEN:" + aux.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
                             Cancion c = new Cancion(aux.getString("name"),
                                     new URL("https://api.spotify.com/v1/tracks/" + aux.getString("id")),
                                     stringArtistas(aux.getJSONArray("artists")),
@@ -114,8 +109,7 @@ public  class Spotify {
 
                 }
             }else{
-                System.out.println("ERROR AL EJECUTAR LA OPERACIÓN");
-                System.out.println(res);
+
             }
             return listaCanciones;
         } catch (ExecutionException e) {
@@ -203,8 +197,6 @@ public  class Spotify {
                 String response = sb.toString();
 
                 JSONObject myResponse = new JSONObject(response.toString());
-                System.out.println(con.getResponseCode());
-                System.out.println("Respuesta: " + myResponse);
                 return myResponse;
             } catch (MalformedURLException | JSONException e) {
                 e.printStackTrace();
@@ -250,7 +242,6 @@ public  class Spotify {
                 token =  myResponse.getString("access_token");
                 int code = con.getResponseCode();
                 //nombrePlaylist.setText(con.getResponseCode());
-                System.out.println(code + " el bichooooooooooooo");
                 con.disconnect();
 
             } catch (MalformedURLException e) {

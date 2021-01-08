@@ -93,7 +93,6 @@ public class JugarRondaSonarActivity extends AppCompatActivity {
         helper = new BBDD_Helper(getApplicationContext());
         sp = new Spotify(helper);
         cancionActual = ((Partida)SingletonMap.getInstancia().get("partida")).getCanciones().get(this.rondasJugadas-1);
-        System.out.println(cancionActual.getUrl() + " NOMBRE DE LA CANCION");
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 

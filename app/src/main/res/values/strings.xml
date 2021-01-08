@@ -79,5 +79,5 @@ Here we can see the information of the song that was playing and check if someon
 After we reach the established number of rounds (or the playlist runs out of songs) the game will end and it will show us the players with his/her points and right
 answers.
     </string>
-
+    <string name="playlist_no_valida">This playlist is not valid</string>
 </resources>

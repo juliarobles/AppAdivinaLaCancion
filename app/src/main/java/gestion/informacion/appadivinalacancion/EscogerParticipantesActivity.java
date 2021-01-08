@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import gestion.informacion.appadivinalacancion.util.BBDD.BBDD_Helper;
+import gestion.informacion.appadivinalacancion.util.Modelo.Cancion;
 import gestion.informacion.appadivinalacancion.util.Modelo.Playlist;
 import gestion.informacion.appadivinalacancion.util.Otros.JugadorProvisional;
 import gestion.informacion.appadivinalacancion.util.Modelo.Partida;
@@ -109,7 +110,7 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
         if(numParticipantes < 7){
             //Sacamos el nombre
             String nombre = nombreParticipante.getText().toString();
-            System.out.println("Nombre: " + nombre);
+
             if(nombre == null || nombre.trim().equals("")){
                 Toast.makeText(getApplicationContext(), R.string.falloNombreVacio, Toast.LENGTH_SHORT).show();
             } else {
@@ -139,18 +140,17 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 //Creo la partida de verdad
                 String [] partes = partidaProvisional.getPlaylist().toString().split("/|\\?");
                 String id;
-                System.out.println(partes[3]);
+
                 if(!partes[3].equals("v1")){
                      id = partes[4];
-                    System.out.println(id);
+
                 }else{
                     id = partes[5];
-                    System.out.println(id);
+
                 }
                 Playlist playlist = sp.getPlaylistFromUrl(id);
 
-                System.out.println(playlist);
-                System.out.println(playlist.getNombre());
+
                 Partida partidaDefinitiva = new Partida(partidaProvisional.getFecha(), partidaProvisional.getRondas(), playlist, helper); //SUSTITUYE null POR PLAYLIST
 
                 //Establezco los jugadores como definitivos (osea los guardo en la bd)
@@ -163,13 +163,20 @@ public class EscogerParticipantesActivity extends AppCompatActivity {
                 map.put("rondasJugadas", 0);
 
                 //Creamos la lista de canciones que va a sonar
+                List<Cancion> canciones = sp.getCancionesFromPlaylist(id, partidaProvisional.getRondas());
+                if(canciones.size() <=0){
+                    Toast.makeText(getApplicationContext(), R.string.playlist_no_valida, Toast.LENGTH_SHORT).show();
+                }else{
+                    partidaDefinitiva.setCanciones(canciones,helper);
+                    partidaDefinitiva.setRondas(canciones.size(), helper);
+                    map.replace("partida", partidaDefinitiva);
 
-                partidaDefinitiva.setCanciones(sp.getCancionesFromPlaylist(id, partidaProvisional.getRondas()),helper);
-                map.replace("partida", partidaDefinitiva);
+                    //Comienzo el juego
 
-                //Comienzo el juego
-                Intent intent = new Intent(this, JugarRondaSonarActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(this, JugarRondaSonarActivity.class);
+                    startActivity(intent);
+                }
+
             } else {
                 Toast.makeText(getApplicationContext(), R.string.falloNoJugadores, Toast.LENGTH_SHORT).show();
             }

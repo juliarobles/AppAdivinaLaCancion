@@ -24,7 +24,7 @@ public class InstruccionesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instrucciones);
         instruccionesTitulo = (TextView) findViewById(R.id.instrucciontesTitulo);
         instruccionesTitulo.setText(R.string.title_instrucciones);
-
+        getSupportActionBar().hide();
 
     }
 }

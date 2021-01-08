@@ -95,4 +95,5 @@ Cuando lleguemos al número de rondas establecido (o no queden más canciones en
 nos mostrará a los
 jugadores con sus respectivos puntos y canciones acertadas.
     </string>
+    <string name="playlist_no_valida">Esta lista de reproducción no es válida</string>
 </resources>

@@ -76,7 +76,6 @@ public class JugarRondaRespuestaActivity extends AppCompatActivity {
 
         Jugador j = (Jugador) ganador.getSelectedItem();
         if(j.getPuntos() >= 0){ //Asi no cuento el no haber acertado
-            System.out.println(j.getPuntos() + "PUNTOS DEL JUGADOR " + j.getNombre());
             try {
                 j.setPuntos(((int)(j.getPuntos()+ ((35000 - puntos)/1000))), helper);
                 j.setAcertadas(j.getAcertadas() + 1, helper);
