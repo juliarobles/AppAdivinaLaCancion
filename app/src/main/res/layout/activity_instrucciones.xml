@@ -30,6 +30,8 @@
                 android:id="@+id/instrucciontesTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="@string/title_instrucciones"
                 android:textColor="@color/amarillito"
@@ -39,6 +41,7 @@
                 android:id="@+id/text_configuracion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
                 android:gravity="center"
                 android:text="@string/configuracion"
                 android:textColor="@color/amarillito"
@@ -47,25 +50,28 @@
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/seleccion_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/seleccion_playlist" />
+                android:text="@string/seleccion_playlist"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/seleccion_jugadores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/seleccion_jugadores" />
+                android:text="@string/seleccion_jugadores"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/title_juego"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
                 android:gravity="center"
                 android:text="@string/juego"
                 android:textColor="@color/amarillito"
@@ -74,26 +80,30 @@
             <View
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/adivina"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/adivina" />
+                android:text="@string/adivina"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/ver_resultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ver_resultado" />
+                android:text="@string/ver_resultado"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/fin_partida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fin_partida" />
+                android:layout_marginBottom="30dp"
+                android:text="@string/fin_partida"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
